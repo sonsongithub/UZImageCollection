@@ -13,7 +13,7 @@ public class ImageCollectionViewController : UICollectionViewController, UIColle
     let collection:ImageCollection
     
     func numberOfItemsInLine() -> Int {
-        return 4
+        return 3
     }
     
     init(collection:ImageCollection) {
@@ -44,7 +44,19 @@ public class ImageCollectionViewController : UICollectionViewController, UIColle
         self.view.backgroundColor = UIColor.whiteColor()
         self.collectionView?.backgroundColor = UIColor.whiteColor()
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "focus:", name: "did", object: nil)
+        
         cellSize = floor((self.view.frame.size.width - CGFloat(numberOfItemsInLine()) + 1) / CGFloat(numberOfItemsInLine()));
+    }
+    
+    func focus(notification:NSNotification) {
+        if let userInfo = notification.userInfo {
+            if let index = userInfo["index"] as? Int {
+                if let collectionView = self.collectionView {
+                    collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.CenteredVertically, animated: true)
+                }
+            }
+        }
     }
     
     public override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {

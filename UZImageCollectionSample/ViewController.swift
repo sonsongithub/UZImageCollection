@@ -27,9 +27,9 @@ class ViewController: UIViewController {
         var paths:[String] = []
         
         for var i = 1; i <= 11; i++ {
-//            if let path = NSBundle.mainBundle().pathForResource("pict - \(i).png", ofType: "") {
-//                paths.append(path)
-//            }
+            paths.append("pict - \(i).png")
+        }
+        for var i = 1; i <= 11; i++ {
             paths.append("pict - \(i).png")
         }
         

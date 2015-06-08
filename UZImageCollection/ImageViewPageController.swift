@@ -8,26 +8,35 @@
 
 import UIKit
 
-class ImageViewPageController: UIPageViewController, UIPageViewControllerDataSource {
+class ImageViewPageController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     let collection:ImageCollection
     var currentIndex = 0
+    let navigationBar = UINavigationBar(frame: CGRectZero)
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        navigationBar.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.view.addSubview(navigationBar)
+        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[navigationBar]-0-|", options: NSLayoutFormatOptions.allZeros, metrics: [:], views: ["navigationBar":navigationBar]))
+        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[navigationBar(==64)]", options: NSLayoutFormatOptions.allZeros, metrics: [:], views: ["navigationBar":navigationBar]))
+        navigationBar.pushNavigationItem(UINavigationItem(title: "a"), animated: false)
+        navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "close:")
+    }
+    
+    func close(sender:AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: { () -> Void in })
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     init(collection:ImageCollection, index:Int) {
         self.collection = collection
         self.currentIndex = index
-        super.init(transitionStyle: UIPageViewControllerTransitionStyle.Scroll, navigationOrientation: UIPageViewControllerNavigationOrientation.Horizontal, options:[:])
+        super.init(transitionStyle: UIPageViewControllerTransitionStyle.Scroll, navigationOrientation: UIPageViewControllerNavigationOrientation.Horizontal, options:[UIPageViewControllerOptionInterPageSpacingKey:12])
         self.dataSource = self
+        self.delegate = self
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -39,6 +48,7 @@ class ImageViewPageController: UIPageViewController, UIPageViewControllerDataSou
         let vc = ImageViewPageController(collection:collection, index:index)
         if let image = collection.image(index) {
             let con = ImageViewController(index: index, image: image)
+            vc.view.backgroundColor = UIColor.blackColor()
             vc.setViewControllers([con], direction: .Forward, animated: false, completion: { (result) -> Void in })
         }
         return vc
