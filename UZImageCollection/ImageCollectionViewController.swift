@@ -76,8 +76,30 @@ public class ImageCollectionViewController : UICollectionViewController, UIColle
     }
     
     public override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let con = ImageViewPageController.controller(collection, index: indexPath.row)
-        self.presentViewController(con, animated: true) { () -> Void in
+        if let cell = collectionView.cellForItemAtIndexPath(indexPath) as? ImageCollectionViewCell {
+            var imageView = UIImageView(image: cell.imageView.image)
+            
+            imageView.contentMode = .ScaleAspectFill
+            
+            self.view.addSubview(imageView)
+            let sourceRect = self.view.convertRect(cell.imageView.frame, fromView: cell.imageView.superview)
+            
+            imageView.frame = sourceRect
+            
+            UIView.animateWithDuration(0.5, animations: { () -> Void in
+            })
+            
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                imageView.frame = self.view.bounds
+                }, completion: { (success) -> Void in
+                    let con = ImageViewPageController.controller(self.collection, index: indexPath.row)
+                    self.presentViewController(con, animated: false) { () -> Void in
+                        imageView.removeFromSuperview()
+                    }
+            })
+            
+
+            
         }
     }
     
