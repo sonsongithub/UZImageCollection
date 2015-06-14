@@ -12,6 +12,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
     let index:Int
     let scrollView = UIScrollView(frame: CGRectZero)
     let imageView = UIImageView(frame: CGRectZero)
+    let imageCollectionViewController:ImageCollectionViewController
     
     var  maximumZoomScale:CGFloat = 0
     var  minimumZoomScale:CGFloat = 0
@@ -25,14 +26,15 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
         scrollView.decelerationRate = UIScrollViewDecelerationRateFast
         scrollView.delegate = self
         scrollView.multipleTouchEnabled = true
+        scrollView.backgroundColor = UIColor.whiteColor()
         self.view.multipleTouchEnabled = true
         self.navigationController?.view.multipleTouchEnabled = true
         
         self.view.addSubview(scrollView)
-        scrollView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
         
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[scrollView]-0-|", options: NSLayoutFormatOptions.allZeros, metrics: [:], views: ["scrollView":scrollView]))
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[scrollView]-1-|", options: NSLayoutFormatOptions.allZeros, metrics: [:], views: ["scrollView":scrollView]))
+        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[scrollView]-0-|", options: NSLayoutFormatOptions(), metrics: [:], views: ["scrollView":scrollView]))
+        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[scrollView]-1-|", options: NSLayoutFormatOptions(), metrics: [:], views: ["scrollView":scrollView]))
         
     }
     
@@ -61,7 +63,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
         self.updateImageCenter()
     }
     
-    func scrollViewDidEndZooming(scrollView: UIScrollView, withView view: UIView!, atScale scale: CGFloat) {
+    func scrollViewDidEndZooming(scrollView: UIScrollView, withView view: UIView?, atScale scale: CGFloat) {
         self.updateImageCenter()
     }
     
@@ -89,7 +91,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
         
         // on high resolution screens we have double the pixel density, so we will be seeing every pixel if we limit the
         // maximum zoom scale to 0.5.
-        let maxScale = 1.0 / UIScreen.mainScreen().scale
+        let maxScale = 2.0 / UIScreen.mainScreen().scale
         
         // don't let minScale exceed maxScale. (If the image is smaller than the screen, we don't want to force it to be zoomed.)
         if (minScale > maxScale) {
@@ -113,21 +115,23 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
         NSNotificationCenter.defaultCenter().postNotificationName("did", object: nil, userInfo: ["index":self.index])
     }
     
-    init(index:Int, image:UIImage) {
+    init(index:Int, image:UIImage, imageCollectionViewController:ImageCollectionViewController) {
         self.index = index
         imageView.image = image
         scrollView.addSubview(imageView)
+        self.imageCollectionViewController = imageCollectionViewController
         imageView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: image.size)
         super.init(nibName: nil, bundle: nil)
     }
     
     required init(coder aDecoder: NSCoder) {
         self.index = 0
+        self.imageCollectionViewController = ImageCollectionViewController(coder: aDecoder)
         super.init(coder: aDecoder)
     }
     
-    class func controllerWithIndex(index:Int, image:UIImage) -> ImageViewController {
-        let con = ImageViewController(index:index, image:image)
+    class func controllerWithIndex(index:Int, image:UIImage, imageCollectionViewController:ImageCollectionViewController) -> ImageViewController {
+        let con = ImageViewController(index:index, image:image, imageCollectionViewController:imageCollectionViewController)
         return con
     }
 }
