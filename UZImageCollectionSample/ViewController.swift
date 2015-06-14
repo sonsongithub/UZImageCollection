@@ -33,7 +33,7 @@ class ViewController: UIViewController {
             paths.append("pict - \(i).png")
         }
         
-        let vc = ImageCollectionViewController.controller(paths)
+        let vc = ImageCollectionViewController.controllerInNavigationController(paths)
         self.presentViewController(vc, animated: true, completion: { () -> Void in })
     }
 }

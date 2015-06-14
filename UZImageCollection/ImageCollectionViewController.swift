@@ -54,6 +54,7 @@ public class ImageCollectionViewController : UICollectionViewController, UIColle
     let collection:ImageCollection
     
     var animatingImageView:UIImageView? = nil
+    var animatingBackgroundView:UIView? = nil
     var currentFocusedPath:NSIndexPath = NSIndexPath(forItem: 0, inSection: 0)
     
     func numberOfItemsInLine() -> Int {
@@ -79,6 +80,13 @@ public class ImageCollectionViewController : UICollectionViewController, UIColle
         return vc
     }
     
+    public class func controllerInNavigationController(files:[String]) -> UINavigationController {
+        let collection = ImageCollection(files:files)
+        let vc = ImageCollectionViewController(collection:collection)
+        let nav = UINavigationController(rootViewController: vc)
+        return nav
+    }
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
         self.collectionView?.registerClass(ImageCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
@@ -91,6 +99,8 @@ public class ImageCollectionViewController : UICollectionViewController, UIColle
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "focus:", name: "did", object: nil)
         
         cellSize = floor((self.view.frame.size.width - CGFloat(numberOfItemsInLine()) + 1) / CGFloat(numberOfItemsInLine()));
+        
+        self.title = String(format: NSLocalizedString("%ld images", comment: ""), arguments: [self.collection.count])
     }
     
     public override func viewWillAppear(animated: Bool) {
@@ -100,29 +110,50 @@ public class ImageCollectionViewController : UICollectionViewController, UIColle
         print(cell)
         
         if let imageView = self.animatingImageView {
+            let backgroundView = UIView(frame: self.view.bounds)
+            backgroundView.backgroundColor = UIColor.whiteColor()
+            self.view.addSubview(backgroundView)
             self.view.addSubview(imageView)
+            animatingBackgroundView = backgroundView
         }
     }
     
     public override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         let path = self.currentFocusedPath
+        var hoge:String? = "a"
         let cell = self.collectionView?.cellForItemAtIndexPath(path)
-        print(cell)
-        if let imageView = self.animatingImageView, let cell = cell as? ImageCollectionViewCell, let image = imageView.image {
-            cell.hidden = true
-            self.view.addSubview(imageView)
-            imageView.clipsToBounds = true
-            let destination = self.view.convertRect(cell.imageView.frame, fromView: cell.imageView.superview)
-            //let (s, e) = imageViewFrame2(destination, destinationImageViewFrame:destination, imageSize:image.size, contentMode:UIViewContentMode.ScaleAspectFill)
-            UIView.animateWithDuration(0.6,
-                animations: { () -> Void in
-                    imageView.frame = destination
-                }, completion: { (success) -> Void in
-                    imageView.removeFromSuperview()
-                    self.animatingImageView = nil
-                    cell.hidden = false
-            })
+        if let imageView = self.animatingImageView {
+            if let cell = cell as? ImageCollectionViewCell, let hoge = hoge{
+                cell.hidden = true
+                self.view.addSubview(imageView)
+                imageView.clipsToBounds = true
+                
+                let destination = self.view.convertRect(cell.imageView.frame, fromView: cell.imageView.superview)
+                UIView.animateWithDuration(0.4,
+                    animations: { () -> Void in
+                        self.animatingBackgroundView?.alpha = 0
+                        imageView.frame = destination
+                    }, completion: { (success) -> Void in
+                        imageView.removeFromSuperview()
+                        self.animatingBackgroundView?.removeFromSuperview()
+                        self.animatingImageView = nil
+                        self.animatingBackgroundView = nil
+                        cell.hidden = false
+                })
+            }
+            else {
+                UIView.animateWithDuration(0.4,
+                    animations: { () -> Void in
+                        imageView.alpha = 0
+                        self.animatingBackgroundView?.alpha = 0
+                    }, completion: { (success) -> Void in
+                        imageView.removeFromSuperview()
+                        self.animatingBackgroundView?.removeFromSuperview()
+                        self.animatingImageView = nil
+                        self.animatingBackgroundView = nil
+                })
+            }
         }
     }
     
@@ -177,10 +208,7 @@ public class ImageCollectionViewController : UICollectionViewController, UIColle
                 
                 imageView.frame = sourceRect
                 
-                UIView.animateWithDuration(0.5, animations: { () -> Void in
-                })
-                
-                UIView.animateWithDuration(1, animations: { () -> Void in
+                UIView.animateWithDuration(0.4, animations: { () -> Void in
                     imageView.frame = e
                     whiteBackgroundView.alpha = 1
                     }, completion: { (success) -> Void in

@@ -8,43 +8,6 @@
 
 import UIKit
 
-func imageViewFrame2(sourceImageViewFrame:CGRect, destinationImageViewFrame:CGRect, imageSize:CGSize, contentMode:UIViewContentMode) -> (CGRect, CGRect) {
-    
-    var scaleToFitImageOverSourceImageView:CGFloat = 0
-    let startFrame = sourceImageViewFrame
-    var endFrame = CGRectZero
-    let targetCenter = CGPointMake(CGRectGetMidX(sourceImageViewFrame), CGRectGetMidY(sourceImageViewFrame))
-    
-    if (contentMode == .ScaleAspectFill) {		// 画像一覧のサムネイルの場合
-        // 画像の縦横の小さい方のサイズをビューに合わせる（はみ出す）→ビューの方の縦横の小さい方に合わせて画像スケールする
-        if startFrame.size.width < startFrame.size.height {
-            endFrame.size = CGSizeMake(startFrame.size.width, startFrame.size.width);
-            endFrame.origin = CGPointMake(targetCenter.x - endFrame.size.width/2, targetCenter.y - endFrame.size.height/2);
-            scaleToFitImageOverSourceImageView = sourceImageViewFrame.size.width / startFrame.size.width;
-        }
-        else {
-            endFrame.size = CGSizeMake(startFrame.size.height, startFrame.size.height);
-            endFrame.origin = CGPointMake(targetCenter.x - endFrame.size.width/2, targetCenter.y - endFrame.size.height/2);
-            scaleToFitImageOverSourceImageView = sourceImageViewFrame.size.height / startFrame.size.height;
-        }
-    }
-    else if (contentMode == .ScaleAspectFit) {	// サムネイルの場合
-        // 画像の縦横の大きい方のサイズをビューに合わせる（はみ出さない）→ビューの方の縦横の大きい方に合わせて画像スケールする
-        if imageSize.height / imageSize.width > sourceImageViewFrame.size.height / sourceImageViewFrame.size.width {
-            endFrame = startFrame;
-            endFrame.origin = CGPointMake(targetCenter.x - endFrame.size.width/2, targetCenter.y - endFrame.size.height/2);
-            scaleToFitImageOverSourceImageView = sourceImageViewFrame.size.height / startFrame.size.height;
-        }
-        else {
-            endFrame = startFrame;
-            endFrame.origin = CGPointMake(targetCenter.x - endFrame.size.width/2, targetCenter.y - endFrame.size.height/2);
-            scaleToFitImageOverSourceImageView = sourceImageViewFrame.size.width / startFrame.size.width;
-        }
-    }
-    
-    return (startFrame, endFrame)
-}
-
 class ImageViewPageController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     let collection:ImageCollection
     var currentIndex = 0
@@ -71,24 +34,6 @@ class ImageViewPageController: UIPageViewController, UIPageViewControllerDataSou
                 imageView.contentMode = UIViewContentMode.ScaleAspectFill
                 imageView.frame = startFrame
                 self.imageCollectionViewController.animatingImageView = imageView
-                
-//                self.imageCollectionViewController.collectionView?.reloadData()
-//                let path = self.imageCollectionViewController.currentFocusedPath
-//                let cell = self.imageCollectionViewController.collectionView?.cellForItemAtIndexPath(path)
-//                if let cell = cell as? ImageCollectionViewCell {
-//                    let destination = p.view.convertRect(cell.imageView.frame, fromView: cell.imageView.superview)
-//                    let (s, e) = imageViewFrame2(destination, destinationImageViewFrame:destination, imageSize:image.size, contentMode:UIViewContentMode.ScaleAspectFill)
-//                    
-//                    self.dismissViewControllerAnimated(false, completion: { () -> Void in
-//                        p.view.addSubview(imageView)
-//                        UIView.animateWithDuration(0.6,
-//                            animations: { () -> Void in
-//                                imageView.frame = destination
-//                            }, completion: { (success) -> Void in
-//                                imageView.removeFromSuperview()
-//                        })
-//                    })
-//                }
             }
         }
         self.dismissViewControllerAnimated(false, completion: { () -> Void in })
@@ -131,13 +76,6 @@ class ImageViewPageController: UIPageViewController, UIPageViewControllerDataSou
             }
         }
     }
-    
-//    func sourceAtIndex(index:Int) -> UIViewController? {
-//        if let image = collection.image(index) {
-////            let con = ImageViewController(index: index, image: image)
-//        }
-//        return nil
-//    }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
         if let viewController = viewController as? ImageViewController {
