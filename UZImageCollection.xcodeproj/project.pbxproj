@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1423BB961B2E168200D65ECE /* UZImageCollection.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 14FF4C921B239166007AED39 /* UZImageCollection.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1423BB9B1B2E19C100D65ECE /* ImageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1423BB9A1B2E19C100D65ECE /* ImageInfo.swift */; };
 		14C985B21B24DB31000FE9EC /* ImageViewPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C985B11B24DB31000FE9EC /* ImageViewPageController.swift */; };
 		14FF4C981B239166007AED39 /* UZImageCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = 14FF4C971B239166007AED39 /* UZImageCollection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		14FF4C9E1B239166007AED39 /* UZImageCollection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14FF4C921B239166007AED39 /* UZImageCollection.framework */; };
@@ -24,6 +26,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1423BB971B2E168200D65ECE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 14FF4C891B239166007AED39 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 14FF4C911B239166007AED39;
+			remoteInfo = UZImageCollection;
+		};
 		14FF4C9F1B239166007AED39 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 14FF4C891B239166007AED39 /* Project object */;
@@ -33,7 +42,22 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		1423BB991B2E168300D65ECE /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				1423BB961B2E168200D65ECE /* UZImageCollection.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		1423BB9A1B2E19C100D65ECE /* ImageInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageInfo.swift; sourceTree = "<group>"; };
 		14C985B11B24DB31000FE9EC /* ImageViewPageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewPageController.swift; sourceTree = "<group>"; };
 		14FF4C921B239166007AED39 /* UZImageCollection.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UZImageCollection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		14FF4C961B239166007AED39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -106,6 +130,7 @@
 			children = (
 				14FF4C971B239166007AED39 /* UZImageCollection.h */,
 				14FF4CD41B239ADC007AED39 /* ImageCollection.swift */,
+				1423BB9A1B2E19C100D65ECE /* ImageInfo.swift */,
 				14FF4CD51B239ADC007AED39 /* ImageCollectionViewCell.swift */,
 				14FF4CD61B239ADC007AED39 /* ImageCollectionViewController.swift */,
 				14FF4CD71B239ADC007AED39 /* ImageViewController.swift */,
@@ -218,10 +243,12 @@
 				14FF4CAE1B2392F2007AED39 /* Sources */,
 				14FF4CAF1B2392F2007AED39 /* Frameworks */,
 				14FF4CB01B2392F2007AED39 /* Resources */,
+				1423BB991B2E168300D65ECE /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				1423BB981B2E168200D65ECE /* PBXTargetDependency */,
 			);
 			name = UZImageCollectionSample;
 			productName = UZImageCollectionSample;
@@ -235,17 +262,19 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = sonson;
 				TargetAttributes = {
 					14FF4C911B239166007AED39 = {
 						CreatedOnToolsVersion = 6.3.2;
+						DevelopmentTeam = JP866VWWSD;
 					};
 					14FF4C9C1B239166007AED39 = {
 						CreatedOnToolsVersion = 6.3.2;
 					};
 					14FF4CB11B2392F2007AED39 = {
 						CreatedOnToolsVersion = 6.3.2;
+						DevelopmentTeam = JP866VWWSD;
 					};
 				};
 			};
@@ -304,6 +333,7 @@
 				14FF4CDA1B239ADC007AED39 /* ImageCollectionViewController.swift in Sources */,
 				14C985B21B24DB31000FE9EC /* ImageViewPageController.swift in Sources */,
 				14FF4CD91B239ADC007AED39 /* ImageCollectionViewCell.swift in Sources */,
+				1423BB9B1B2E19C100D65ECE /* ImageInfo.swift in Sources */,
 				14FF4CDB1B239ADC007AED39 /* ImageViewController.swift in Sources */,
 				14FF4CD81B239ADC007AED39 /* ImageCollection.swift in Sources */,
 			);
@@ -329,6 +359,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		1423BB981B2E168200D65ECE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 14FF4C911B239166007AED39 /* UZImageCollection */;
+			targetProxy = 1423BB971B2E168200D65ECE /* PBXContainerItemProxy */;
+		};
 		14FF4CA01B239166007AED39 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 14FF4C911B239166007AED39 /* UZImageCollection */;
@@ -378,6 +413,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -448,6 +484,8 @@
 		14FF4CA91B239166007AED39 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Yuichi Yoshida (96SM5DT2NL)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yuichi Yoshida (96SM5DT2NL)";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -455,6 +493,7 @@
 				INFOPLIST_FILE = UZImageCollection/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sonson.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -463,6 +502,7 @@
 		14FF4CAA1B239166007AED39 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -470,6 +510,7 @@
 				INFOPLIST_FILE = UZImageCollection/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sonson.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -488,6 +529,7 @@
 				);
 				INFOPLIST_FILE = UZImageCollectionTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sonson.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -501,6 +543,7 @@
 				);
 				INFOPLIST_FILE = UZImageCollectionTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sonson.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -509,13 +552,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Yuichi Yoshida (96SM5DT2NL)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yuichi Yoshida (96SM5DT2NL)";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = UZImageCollectionSample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sonson.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "750e315c-8b78-4ef8-9bd4-4ee04dc7f26e";
 			};
 			name = Debug;
 		};
@@ -523,9 +571,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = UZImageCollectionSample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sonson.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "750e315c-8b78-4ef8-9bd4-4ee04dc7f26e";
 			};
 			name = Release;
 		};

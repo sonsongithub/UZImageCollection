@@ -8,7 +8,7 @@
 
 import Foundation
 
-func imageViewFrame(sourceImageViewFrame:CGRect, destinationImageViewFrame:CGRect, imageSize:CGSize, contentMode:UIViewContentMode) -> (CGRect, CGRect) {
+func imageViewFrame(sourceImageViewFrame:CGRect, destinationImageViewFrame:CGRect, imageSize:CGSize, contentMode:UIViewContentMode) -> CGRect {
     
     var scaleToFitImageOverContainerView:CGFloat = 1.0		/**< アニメーションさせるビューを画面全体に引き伸ばすための比．アニメーションさせるビューの最終フレームサイズを決めるために使う． */
     
@@ -24,29 +24,7 @@ func imageViewFrame(sourceImageViewFrame:CGRect, destinationImageViewFrame:CGRec
     endFrame.origin.x = (destinationImageViewFrame.size.width - endFrame.size.width)/2
     endFrame.origin.y = (destinationImageViewFrame.size.height - endFrame.size.height)/2
     
-    var startFrame = CGRectZero;					/**< アニメーションさせるビューの最終フレーム */
-    if contentMode == .ScaleAspectFill {		// 画像一覧のサムネイルの場合
-        // 画像の縦横の小さい方のサイズをビューに合わせる（はみ出す）→ビューの方の縦横の小さい方に合わせて画像スケールする
-        if (endFrame.size.width < endFrame.size.height) {
-            startFrame.size = CGSizeMake(imageSize.width * scaleToFitImageOverContainerView, imageSize.width * scaleToFitImageOverContainerView);
-        }
-        else {
-            startFrame.size = CGSizeMake(imageSize.height * scaleToFitImageOverContainerView, imageSize.height * scaleToFitImageOverContainerView);
-        }
-    }
-    else {	// サムネイルの場合
-        // 画像の縦横の大きい方のサイズをビューに合わせる（はみ出さない）→ビューの方の縦横の大きい方に合わせて画像スケールする
-        if (imageSize.height / imageSize.width > sourceImageViewFrame.size.height / sourceImageViewFrame.size.width) {
-            let ratio = sourceImageViewFrame.size.height / imageSize.height;
-            startFrame.size = CGSizeMake(imageSize.width * ratio, imageSize.height * ratio);
-        }
-        else {
-            let ratio = sourceImageViewFrame.size.width / imageSize.width;
-            startFrame.size = CGSizeMake(imageSize.width * ratio, imageSize.height * ratio);
-        }
-    }
-    
-    return (startFrame, endFrame)
+    return endFrame
 }
 
 public class ImageCollectionViewController : UICollectionViewController, UICollectionViewDelegateFlowLayout {
@@ -121,10 +99,9 @@ public class ImageCollectionViewController : UICollectionViewController, UIColle
     public override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         let path = self.currentFocusedPath
-        var hoge:String? = "a"
         let cell = self.collectionView?.cellForItemAtIndexPath(path)
         if let imageView = self.animatingImageView {
-            if let cell = cell as? ImageCollectionViewCell, let hoge = hoge{
+            if let cell = cell as? ImageCollectionViewCell {
                 cell.hidden = true
                 self.view.addSubview(imageView)
                 imageView.clipsToBounds = true
@@ -163,6 +140,8 @@ public class ImageCollectionViewController : UICollectionViewController, UIColle
                 if let collectionView = self.collectionView {
                     collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.CenteredVertically, animated: true)
                     self.currentFocusedPath = NSIndexPath(forItem: index, inSection: 0)
+                    self.collectionView?.setNeedsDisplay()
+                    self.collectionView?.reloadItemsAtIndexPaths([self.currentFocusedPath])
                 }
             }
         }
@@ -204,7 +183,7 @@ public class ImageCollectionViewController : UICollectionViewController, UIColle
                 self.view.addSubview(imageView)
                 let sourceRect = self.view.convertRect(cell.imageView.frame, fromView: cell.imageView.superview)
                 
-                let (_, e) = imageViewFrame(sourceRect, destinationImageViewFrame: self.view.bounds, imageSize: sourceImage.size, contentMode: UIViewContentMode.ScaleAspectFill)
+                let e = imageViewFrame(sourceRect, destinationImageViewFrame: self.view.bounds, imageSize: sourceImage.size, contentMode: UIViewContentMode.ScaleAspectFill)
                 
                 imageView.frame = sourceRect
                 

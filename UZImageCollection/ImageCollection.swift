@@ -8,10 +8,10 @@
 
 import Foundation
 
-public class ImageCollection {
+class ImageCollection {
     var files:[String] = []
     
-    public init(files:[String]) {
+    init(files:[String]) {
         self.files.extend(files)
     }
     
@@ -19,7 +19,7 @@ public class ImageCollection {
         return files.count
     }
     
-    public func image(index:Int) -> UIImage? {
+    func image(index:Int) -> UIImage? {
         if (index >= 0 && index < files.count) {
             let file = files[index]
 //            let image = UIImage(contentsOfFile: file)
