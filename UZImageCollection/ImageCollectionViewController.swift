@@ -36,7 +36,7 @@ public class ImageCollectionViewController : UICollectionViewController, UIColle
     var currentFocusedPath:NSIndexPath = NSIndexPath(forItem: 0, inSection: 0)
     
     func numberOfItemsInLine() -> Int {
-        return 3
+        return 2
     }
     
     init(collection:ImageCollection) {
@@ -203,6 +203,11 @@ public class ImageCollectionViewController : UICollectionViewController, UIColle
             }
             
         }
+    }
+    
+    public override func collectionView(collectionView: UICollectionView, didEndDisplayingCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+        print("didEndDisplayingCell")
+        print(cell)
     }
     
     public override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {

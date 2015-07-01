@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		1423BB961B2E168200D65ECE /* UZImageCollection.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 14FF4C921B239166007AED39 /* UZImageCollection.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1423BB9B1B2E19C100D65ECE /* ImageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1423BB9A1B2E19C100D65ECE /* ImageInfo.swift */; };
+		143AF5021B444E6200265644 /* CommonCrypto.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 143AF4FD1B444E6200265644 /* CommonCrypto.xcconfig */; };
+		143AF5031B444E6200265644 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 143AF4FE1B444E6200265644 /* Info.plist */; };
+		143AF5041B444E8900265644 /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 143AF4E61B444E3A00265644 /* CommonCrypto.framework */; };
+		1462B6BA1B443F3C00E4BB78 /* objc-header.h in Headers */ = {isa = PBXBuildFile; fileRef = 1462B6B91B443F3C00E4BB78 /* objc-header.h */; };
 		14C985B21B24DB31000FE9EC /* ImageViewPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C985B11B24DB31000FE9EC /* ImageViewPageController.swift */; };
 		14FF4C981B239166007AED39 /* UZImageCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = 14FF4C971B239166007AED39 /* UZImageCollection.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		14FF4C9E1B239166007AED39 /* UZImageCollection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14FF4C921B239166007AED39 /* UZImageCollection.framework */; };
@@ -58,6 +62,16 @@
 
 /* Begin PBXFileReference section */
 		1423BB9A1B2E19C100D65ECE /* ImageInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageInfo.swift; sourceTree = "<group>"; };
+		143AF4E61B444E3A00265644 /* CommonCrypto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CommonCrypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		143AF4EA1B444E3A00265644 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		143AF4F41B444E3A00265644 /* CommonCryptoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonCryptoTests.swift; sourceTree = "<group>"; };
+		143AF4F61B444E3A00265644 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		143AF4FD1B444E6200265644 /* CommonCrypto.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = CommonCrypto.xcconfig; path = ../../CommonCrypto/CommonCrypto/CommonCrypto.xcconfig; sourceTree = "<group>"; };
+		143AF4FE1B444E6200265644 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../../CommonCrypto/CommonCrypto/Info.plist; sourceTree = "<group>"; };
+		143AF4FF1B444E6200265644 /* iphoneos.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; name = iphoneos.modulemap; path = ../../CommonCrypto/CommonCrypto/iphoneos.modulemap; sourceTree = "<group>"; };
+		143AF5001B444E6200265644 /* iphonesimulator.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; name = iphonesimulator.modulemap; path = ../../CommonCrypto/CommonCrypto/iphonesimulator.modulemap; sourceTree = "<group>"; };
+		143AF5011B444E6200265644 /* macosx.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; name = macosx.modulemap; path = ../../CommonCrypto/CommonCrypto/macosx.modulemap; sourceTree = "<group>"; };
+		1462B6B91B443F3C00E4BB78 /* objc-header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "objc-header.h"; path = "../UZImageCollection/objc-header.h"; sourceTree = "<group>"; };
 		14C985B11B24DB31000FE9EC /* ImageViewPageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewPageController.swift; sourceTree = "<group>"; };
 		14FF4C921B239166007AED39 /* UZImageCollection.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UZImageCollection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		14FF4C961B239166007AED39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -79,10 +93,18 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		143AF4E21B444E3A00265644 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		14FF4C8E1B239166007AED39 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				143AF5041B444E8900265644 /* CommonCrypto.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,12 +127,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		143AF4E71B444E3A00265644 /* CommonCrypto */ = {
+			isa = PBXGroup;
+			children = (
+				143AF4FD1B444E6200265644 /* CommonCrypto.xcconfig */,
+				143AF4FE1B444E6200265644 /* Info.plist */,
+				143AF4FF1B444E6200265644 /* iphoneos.modulemap */,
+				143AF5001B444E6200265644 /* iphonesimulator.modulemap */,
+				143AF5011B444E6200265644 /* macosx.modulemap */,
+				143AF4EA1B444E3A00265644 /* Info.plist */,
+			);
+			path = CommonCrypto;
+			sourceTree = "<group>";
+		};
+		143AF4F31B444E3A00265644 /* CommonCryptoTests */ = {
+			isa = PBXGroup;
+			children = (
+				143AF4F41B444E3A00265644 /* CommonCryptoTests.swift */,
+				143AF4F61B444E3A00265644 /* Info.plist */,
+			);
+			path = CommonCryptoTests;
+			sourceTree = "<group>";
+		};
 		14FF4C881B239166007AED39 = {
 			isa = PBXGroup;
 			children = (
 				14FF4C941B239166007AED39 /* UZImageCollection */,
 				14FF4CB31B2392F2007AED39 /* UZImageCollectionSample */,
 				14FF4CA11B239166007AED39 /* UZImageCollectionTests */,
+				143AF4E71B444E3A00265644 /* CommonCrypto */,
+				143AF4F31B444E3A00265644 /* CommonCryptoTests */,
 				14FF4C931B239166007AED39 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -121,6 +167,7 @@
 				14FF4C921B239166007AED39 /* UZImageCollection.framework */,
 				14FF4C9D1B239166007AED39 /* UZImageCollectionTests.xctest */,
 				14FF4CB21B2392F2007AED39 /* UZImageCollectionSample.app */,
+				143AF4E61B444E3A00265644 /* CommonCrypto.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -168,6 +215,7 @@
 		14FF4CB31B2392F2007AED39 /* UZImageCollectionSample */ = {
 			isa = PBXGroup;
 			children = (
+				1462B6B91B443F3C00E4BB78 /* objc-header.h */,
 				14FF4CB61B2392F2007AED39 /* AppDelegate.swift */,
 				14FF4CB81B2392F2007AED39 /* ViewController.swift */,
 				14FF4CBA1B2392F2007AED39 /* Main.storyboard */,
@@ -189,17 +237,43 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		143AF4E31B444E3A00265644 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		14FF4C8F1B239166007AED39 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				14FF4C981B239166007AED39 /* UZImageCollection.h in Headers */,
+				1462B6BA1B443F3C00E4BB78 /* objc-header.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		143AF4E51B444E3A00265644 /* CommonCrypto */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 143AF4FB1B444E3A00265644 /* Build configuration list for PBXNativeTarget "CommonCrypto" */;
+			buildPhases = (
+				143AF4E11B444E3A00265644 /* Sources */,
+				143AF4E21B444E3A00265644 /* Frameworks */,
+				143AF4E31B444E3A00265644 /* Headers */,
+				143AF4E41B444E3A00265644 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CommonCrypto;
+			productName = CommonCrypto;
+			productReference = 143AF4E61B444E3A00265644 /* CommonCrypto.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		14FF4C911B239166007AED39 /* UZImageCollection */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 14FF4CA81B239166007AED39 /* Build configuration list for PBXNativeTarget "UZImageCollection" */;
@@ -265,6 +339,9 @@
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = sonson;
 				TargetAttributes = {
+					143AF4E51B444E3A00265644 = {
+						CreatedOnToolsVersion = 7.0;
+					};
 					14FF4C911B239166007AED39 = {
 						CreatedOnToolsVersion = 6.3.2;
 						DevelopmentTeam = JP866VWWSD;
@@ -291,6 +368,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				143AF4E51B444E3A00265644 /* CommonCrypto */,
 				14FF4C911B239166007AED39 /* UZImageCollection */,
 				14FF4C9C1B239166007AED39 /* UZImageCollectionTests */,
 				14FF4CB11B2392F2007AED39 /* UZImageCollectionSample */,
@@ -299,6 +377,15 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		143AF4E41B444E3A00265644 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				143AF5031B444E6200265644 /* Info.plist in Resources */,
+				143AF5021B444E6200265644 /* CommonCrypto.xcconfig in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		14FF4C901B239166007AED39 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -326,6 +413,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		143AF4E11B444E3A00265644 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		14FF4C8D1B239166007AED39 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -391,6 +485,43 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		143AF4F71B444E3A00265644 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 143AF4FD1B444E6200265644 /* CommonCrypto.xcconfig */;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = CommonCrypto/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonson.CommonCrypto;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		143AF4F81B444E3A00265644 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 143AF4FD1B444E6200265644 /* CommonCrypto.xcconfig */;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = CommonCrypto/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonson.CommonCrypto;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		14FF4CA61B239166007AED39 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -496,6 +627,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sonson.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Debug;
 		};
@@ -513,6 +645,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sonson.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Release;
 		};
@@ -564,6 +697,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sonson.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "750e315c-8b78-4ef8-9bd4-4ee04dc7f26e";
+				SWIFT_OBJC_BRIDGING_HEADER = "$SRCROOT/UZImageCollection/objc-header.h";
 			};
 			name = Debug;
 		};
@@ -578,12 +712,21 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sonson.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "750e315c-8b78-4ef8-9bd4-4ee04dc7f26e";
+				SWIFT_OBJC_BRIDGING_HEADER = "$SRCROOT/UZImageCollection/objc-header.h";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		143AF4FB1B444E3A00265644 /* Build configuration list for PBXNativeTarget "CommonCrypto" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				143AF4F71B444E3A00265644 /* Debug */,
+				143AF4F81B444E3A00265644 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		14FF4C8C1B239166007AED39 /* Build configuration list for PBXProject "UZImageCollection" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
