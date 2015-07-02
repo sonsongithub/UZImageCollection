@@ -29,34 +29,51 @@ public extension String {
     }
 }
 
-class ImageCollectionViewCell: UICollectionViewCell {
-    static let sharedSession = NSURLSession()
+protocol ImageDownloader {
+    var imageView:UIImageView {get}
+    var indicator:UIActivityIndicatorView {get}
+    
+    var intrinsicImageURL:NSURL {set get}
+    var imageURLHash:String {set get}
+    var task:NSURLSessionDataTask? {set get}
+    var imageURL:NSURL {set get}
+    
+//    func cachePath() -> String
+//    func loadImageFromCache() -> UIImage?
+//    func reload()
+//    func startDownloadingImage()
+//    func cancelDownloadingImage()
+}
+
+extension ImageDownloader {
+    var imageURL:NSURL {
+        get {
+            return self.intrinsicImageURL
+        }
+        set (newValue){
+            self.intrinsicImageURL = newValue
+            self.imageURLHash = self.intrinsicImageURL.absoluteString.md5
+        }
+    }
+}
+
+class ImageCollectionViewCell: UICollectionViewCell, ImageDownloader {
     let imageView = UIImageView(frame: CGRectZero)
     let indicator = UIActivityIndicatorView(activityIndicatorStyle:.Gray)
     var intrinsicImageURL = NSURL()
     var imageURLHash = ""
     var task:NSURLSessionDataTask? = nil
     
-    var imageURL:NSURL {
-        get {
-            return intrinsicImageURL
-        }
-        set (newValue){
-            intrinsicImageURL = newValue
-            imageURLHash = intrinsicImageURL.absoluteString.md5
-        }
-    }
-    
-    func reload() {
-        // reload image
-        if let image = loadImageFromCache() {
-            imageView.image = image
-            indicator.stopAnimating()
-        }
-        else {
-            startDownloadingImage()
-        }
-    }
+
+//    var imageURL:NSURL {
+//        get {
+//            return self.intrinsicImageURL
+//        }
+//        set (newValue){
+//            self.intrinsicImageURL = newValue
+//            self.imageURLHash = self.intrinsicImageURL.absoluteString.md5
+//        }
+//    }
     
     func cachePath() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true)
@@ -77,12 +94,23 @@ class ImageCollectionViewCell: UICollectionViewCell {
         return nil
     }
     
+    func reload() {
+        // reload image
+        if let image = loadImageFromCache() {
+            imageView.image = image
+            indicator.stopAnimating()
+        }
+        else {
+            startDownloadingImage()
+        }
+    }
+    
     func startDownloadingImage() {
         let request = NSURLRequest(URL: intrinsicImageURL)
         if let task = NSURLSession.sharedSession().dataTaskWithRequest(request, completionHandler:{ (data, response, error) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 if let data:NSData = data, let image = UIImage(data: data) {
-                                print("finish downloading")
+                    print("finish downloading")
                     self.imageView.image = image
                     data.writeToFile(self.cachePath(), atomically: false)
                 }
