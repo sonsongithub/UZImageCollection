@@ -53,19 +53,17 @@ class ImageViewPageController: UIPageViewController, UIPageViewControllerDataSou
     }
     
     required init(coder aDecoder: NSCoder) {
-        self.collection = ImageCollection(files:[])
+        self.collection = ImageCollection(newList:[])
         self.imageCollectionViewController = ImageCollectionViewController(coder: aDecoder)
         super.init(coder: aDecoder)
     }
     
     class func controller(collection:ImageCollection, index:Int, imageCollectionViewController:ImageCollectionViewController) -> ImageViewPageController {
         let vc = ImageViewPageController(collection:collection, index:index, imageCollectionViewController:imageCollectionViewController)
-        if let image = collection.image(index) {
-            let con = ImageViewController(index: index, image:image, imageCollectionViewController:imageCollectionViewController)
-            vc.imageViewController = con
-            vc.view.backgroundColor = UIColor.whiteColor()
-            vc.setViewControllers([con], direction: .Forward, animated: false, completion: { (result) -> Void in })
-        }
+        let con = ImageViewController(index: index, imageCollectionViewController:imageCollectionViewController)
+        vc.imageViewController = con
+        vc.view.backgroundColor = UIColor.whiteColor()
+        vc.setViewControllers([con], direction: .Forward, animated: false, completion: { (result) -> Void in })
         return vc
     }
     
@@ -80,9 +78,7 @@ class ImageViewPageController: UIPageViewController, UIPageViewControllerDataSou
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
         if let viewController = viewController as? ImageViewController {
             let index = viewController.index + 1
-            if let image = collection.image(index) {
-                return ImageViewController(index: index, image: image, imageCollectionViewController:imageCollectionViewController)
-            }
+            return ImageViewController(index: index, imageCollectionViewController:imageCollectionViewController)
         }
         return nil
     }
@@ -90,9 +86,7 @@ class ImageViewPageController: UIPageViewController, UIPageViewControllerDataSou
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
         if let viewController = viewController as? ImageViewController {
             let index = viewController.index - 1
-            if let image = collection.image(index) {
-                return ImageViewController(index: index, image: image, imageCollectionViewController:imageCollectionViewController)
-            }
+            return ImageViewController(index: index, imageCollectionViewController:imageCollectionViewController)
         }
         return nil
     }

@@ -36,7 +36,7 @@ public class ImageCollectionViewController : UICollectionViewController, UIColle
     var currentFocusedPath:NSIndexPath = NSIndexPath(forItem: 0, inSection: 0)
     
     func numberOfItemsInLine() -> Int {
-        return 2
+        return 3
     }
     
     init(collection:ImageCollection) {
@@ -48,18 +48,18 @@ public class ImageCollectionViewController : UICollectionViewController, UIColle
     }
     
     public required init(coder aDecoder: NSCoder) {
-        self.collection = ImageCollection(files:[])
+        self.collection = ImageCollection(newList: [])
         super.init(coder: aDecoder)
     }
     
-    public class func controller(files:[String]) -> ImageCollectionViewController {
-        let collection = ImageCollection(files:files)
+    public class func controller(URLList:[NSURL]) -> ImageCollectionViewController {
+        let collection = ImageCollection(newList: URLList)
         let vc = ImageCollectionViewController(collection:collection)
         return vc
     }
     
-    public class func controllerInNavigationController(files:[String]) -> UINavigationController {
-        let collection = ImageCollection(files:files)
+    public class func controllerInNavigationController(URLList:[NSURL]) -> UINavigationController {
+        let collection = ImageCollection(newList: URLList)
         let vc = ImageCollectionViewController(collection:collection)
         let nav = UINavigationController(rootViewController: vc)
         return nav
@@ -137,11 +137,16 @@ public class ImageCollectionViewController : UICollectionViewController, UIColle
     func focus(notification:NSNotification) {
         if let userInfo = notification.userInfo {
             if let index = userInfo["index"] as? Int {
+                self.currentFocusedPath = NSIndexPath(forItem: index, inSection: 0)
                 if let collectionView = self.collectionView {
-                    collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.CenteredVertically, animated: true)
-                    self.currentFocusedPath = NSIndexPath(forItem: index, inSection: 0)
-                    self.collectionView?.setNeedsDisplay()
-                    self.collectionView?.reloadItemsAtIndexPaths([self.currentFocusedPath])
+                    if let cell = collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0)) {
+                        if !collectionView.visibleCells().contains(cell) {
+                            collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.CenteredVertically, animated: true)
+                        }
+                    }
+                    else{
+                        collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.CenteredVertically, animated: true)
+                    }
                 }
             }
         }
@@ -206,18 +211,18 @@ public class ImageCollectionViewController : UICollectionViewController, UIColle
     }
     
     public override func collectionView(collectionView: UICollectionView, didEndDisplayingCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
-        print("didEndDisplayingCell")
-        print(cell)
+        if let cell = cell as? ImageCollectionViewCell {
+            cell.cancelDownloadingImage()
+        }
     }
     
     public override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as UICollectionViewCell
         
         if let cell = cell as? ImageCollectionViewCell {
-            let image = collection.image(indexPath.row)
-            if let image = image {
-                cell.setImage(image)
-            }
+            let imageURL = collection.URLList[indexPath.row]
+            cell.imageURL = imageURL
+            cell.reload()
         }
         
         return cell

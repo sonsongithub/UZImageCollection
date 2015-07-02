@@ -9,25 +9,25 @@
 import Foundation
 
 class ImageCollection {
-    var files:[String] = []
+    let URLList:[NSURL]
     
-    init(files:[String]) {
-        self.files.extend(files)
+    init(newList:[NSURL]) {
+        URLList = newList
     }
     
     var count:Int {
-        return files.count
+        return URLList.count
     }
     
-    func image(index:Int) -> UIImage? {
-        if (index >= 0 && index < files.count) {
-            let file = files[index]
-//            let image = UIImage(contentsOfFile: file)
-            let image = UIImage(named: file)
-            if let image = image {
-                return image
-            }
-        }
-        return nil
-    }
+//    func image(index:Int) -> UIImage? {
+//        if (index >= 0 && index < files.count) {
+//            let file = files[index]
+////            let image = UIImage(contentsOfFile: file)
+//            let image = UIImage(named: file)
+//            if let image = image {
+//                return image
+//            }
+//        }
+//        return nil
+//    }
 }

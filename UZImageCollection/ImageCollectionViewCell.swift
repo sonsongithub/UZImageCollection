@@ -9,7 +9,7 @@
 import UIKit
 import CommonCrypto
 
-extension String {
+public extension String {
     var md5: String {
         let str = self.cStringUsingEncoding(NSUTF8StringEncoding)
         let strLen = CC_LONG(self.lengthOfBytesUsingEncoding(NSUTF8StringEncoding))
@@ -33,28 +33,108 @@ class ImageCollectionViewCell: UICollectionViewCell {
     static let sharedSession = NSURLSession()
     let imageView = UIImageView(frame: CGRectZero)
     let indicator = UIActivityIndicatorView(activityIndicatorStyle:.Gray)
+    var intrinsicImageURL = NSURL()
+    var imageURLHash = ""
+    var task:NSURLSessionDataTask? = nil
+    
+    var imageURL:NSURL {
+        get {
+            return intrinsicImageURL
+        }
+        set (newValue){
+            intrinsicImageURL = newValue
+            imageURLHash = intrinsicImageURL.absoluteString.md5
+        }
+    }
+    
+    func reload() {
+        // reload image
+        if let image = loadImageFromCache() {
+            imageView.image = image
+            indicator.stopAnimating()
+        }
+        else {
+            startDownloadingImage()
+        }
+    }
+    
+    func cachePath() -> String {
+        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+        let cacheRootPath:String = paths[0]
+        let cachePath = cacheRootPath.stringByAppendingPathComponent("cache")
+        do {
+            try NSFileManager.defaultManager().createDirectoryAtPath(cachePath, withIntermediateDirectories: true, attributes: [:])
+        } catch let error {
+            print(error)
+        }
+        return cachePath.stringByAppendingPathComponent(imageURLHash)
+    }
+    
+    func loadImageFromCache() -> UIImage? {
+        if let image = UIImage(contentsOfFile: cachePath()) {
+            return image
+        }
+        return nil
+    }
+    
+    func startDownloadingImage() {
+        let request = NSURLRequest(URL: intrinsicImageURL)
+        if let task = NSURLSession.sharedSession().dataTaskWithRequest(request, completionHandler:{ (data, response, error) -> Void in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                if let data:NSData = data, let image = UIImage(data: data) {
+                                print("finish downloading")
+                    self.imageView.image = image
+                    data.writeToFile(self.cachePath(), atomically: false)
+                }
+                else {
+                    print("error downloading")
+                    self.imageView.backgroundColor = UIColor.grayColor()
+                }
+                if let error = error {
+                    print(error.description)
+                }
+                self.indicator.stopAnimating()
+            })
+            self.task = nil
+        }) {
+            indicator.startAnimating()
+            self.task = task
+            task.resume()
+        }
+    }
+    
+    func cancelDownloadingImage() {
+        if let task = self.task {
+            print("cancel")
+            task.cancel()
+        }
+        indicator.stopAnimating()
+    }
     
     override func removeFromSuperview() {
         super.removeFromSuperview()
-        print("removeFromSuperview")
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        print("prepareForReuse")
-        print(self)
+        imageView.image = nil
+        cancelDownloadingImage()
+        indicator.stopAnimating()
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.contentView.addSubview(imageView)
-        self.contentView.addSubview(indicator)
+        indicator.hidesWhenStopped = true
+        contentView.addSubview(imageView)
+        contentView.addSubview(indicator)
         
-        self.contentView.backgroundColor = UIColor.clearColor()
-        self.backgroundColor = UIColor.clearColor()
+        contentView.backgroundColor = UIColor.clearColor()
+        backgroundColor = UIColor.clearColor()
         imageView.backgroundColor = UIColor.greenColor()
+        
         imageView.translatesAutoresizingMaskIntoConstraints = false
         indicator.translatesAutoresizingMaskIntoConstraints = false
+        
         imageView.contentMode = UIViewContentMode.ScaleAspectFill
         imageView.clipsToBounds = true
         
@@ -63,7 +143,6 @@ class ImageCollectionViewCell: UICollectionViewCell {
 
         self.contentView.addConstraint(NSLayoutConstraint(item: indicator, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.contentView, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0))
         self.contentView.addConstraint(NSLayoutConstraint(item: indicator, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self.contentView, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0))
-        indicator.startAnimating()
     }
     
     func setImage(image:UIImage) -> Void {
