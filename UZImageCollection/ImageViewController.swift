@@ -21,6 +21,11 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
     var imageURLHash = ""
     var task:NSURLSessionDataTask? = nil
     
+    deinit {
+        print("deinit")
+        print(self)
+    }
+    
     func reload() {
         // reload image
         if let image = loadImageFromCache() {
@@ -196,11 +201,34 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        print("viewWillAppear")
+        print(self)
         updateImageView()
+        print(parentViewController)
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        print("viewDidDisappear")
+        print(self)
+    }
+    
+    override func removeFromParentViewController() {
+        super.removeFromParentViewController()
+        print("removeFromParentViewController")
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    override func willMoveToParentViewController(parent: UIViewController?) {
+        super.willMoveToParentViewController(parent)
+        print("willMoveToParentViewController")
+        print(parent)
+        if parent == nil {
+            cancelDownloadingImage()
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -213,7 +241,9 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
         self.imageCollectionViewController = imageCollectionViewController
         scrollView.addSubview(imageView)
         super.init(nibName: nil, bundle: nil)
-        self.imageURL = imageCollectionViewController.collection.URLList[index]
+        if imageCollectionViewController.collection.URLList.indices ~= index {
+            self.imageURL = imageCollectionViewController.collection.URLList[index]
+        }
         reload()
     }
     
