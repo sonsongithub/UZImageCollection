@@ -38,21 +38,58 @@ protocol ImageDownloader {
     var task:NSURLSessionDataTask? {set get}
     var imageURL:NSURL {set get}
     
-//    func cachePath() -> String
+    func cachePath() -> String
 //    func loadImageFromCache() -> UIImage?
 //    func reload()
 //    func startDownloadingImage()
-//    func cancelDownloadingImage()
+    //    func cancelDownloadingImage()
+    mutating func startDownloadingImage()
+    mutating func updateTask(newValue:NSURLSessionDataTask?)
 }
 
 extension ImageDownloader {
-    var imageURL:NSURL {
-        get {
-            return self.intrinsicImageURL
+
+    mutating func updateTask(newValue:NSURLSessionDataTask?) {
+        self.task = newValue
+    }
+
+    func cachePath() -> String {
+        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+        let cacheRootPath:String = paths[0]
+        let cachePath = cacheRootPath.stringByAppendingPathComponent("cache")
+        do {
+            try NSFileManager.defaultManager().createDirectoryAtPath(cachePath, withIntermediateDirectories: true, attributes: [:])
+        } catch let error {
+            print(error)
         }
-        set (newValue){
-            self.intrinsicImageURL = newValue
-            self.imageURLHash = self.intrinsicImageURL.absoluteString.md5
+        return cachePath.stringByAppendingPathComponent(imageURLHash)
+    }
+    
+    mutating func startDownloadingImage() {
+        let request = NSURLRequest(URL: intrinsicImageURL)
+        if let task = NSURLSession.sharedSession().dataTaskWithRequest(request, completionHandler:{ (data, response, error) -> Void in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                if let data:NSData = data, let image = UIImage(data: data) {
+                    print("finish downloading")
+                    self.imageView.image = image
+                    data.writeToFile(self.cachePath(), atomically: false)
+                }
+                else {
+                    print("error downloading")
+                    self.imageView.backgroundColor = UIColor.grayColor()
+                }
+                if let error = error {
+                    print(error.description)
+                }
+                self.indicator.stopAnimating()
+            })
+            self.updateTask(nil)
+//            self.task = nil
+            
+        }) {
+            indicator.startAnimating()
+//            self.task = task
+            task.resume()
         }
     }
 }
@@ -64,16 +101,15 @@ class ImageCollectionViewCell: UICollectionViewCell, ImageDownloader {
     var imageURLHash = ""
     var task:NSURLSessionDataTask? = nil
     
-
-//    var imageURL:NSURL {
-//        get {
-//            return self.intrinsicImageURL
-//        }
-//        set (newValue){
-//            self.intrinsicImageURL = newValue
-//            self.imageURLHash = self.intrinsicImageURL.absoluteString.md5
-//        }
-//    }
+    var imageURL:NSURL {
+        get {
+            return self.intrinsicImageURL
+        }
+        set (newValue){
+            self.intrinsicImageURL = newValue
+            self.imageURLHash = self.intrinsicImageURL.absoluteString.md5
+        }
+    }
     
     func cachePath() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true)
@@ -105,31 +141,7 @@ class ImageCollectionViewCell: UICollectionViewCell, ImageDownloader {
         }
     }
     
-    func startDownloadingImage() {
-        let request = NSURLRequest(URL: intrinsicImageURL)
-        if let task = NSURLSession.sharedSession().dataTaskWithRequest(request, completionHandler:{ (data, response, error) -> Void in
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                if let data:NSData = data, let image = UIImage(data: data) {
-                    print("finish downloading")
-                    self.imageView.image = image
-                    data.writeToFile(self.cachePath(), atomically: false)
-                }
-                else {
-                    print("error downloading")
-                    self.imageView.backgroundColor = UIColor.grayColor()
-                }
-                if let error = error {
-                    print(error.description)
-                }
-                self.indicator.stopAnimating()
-            })
-            self.task = nil
-        }) {
-            indicator.startAnimating()
-            self.task = task
-            task.resume()
-        }
-    }
+
     
     func cancelDownloadingImage() {
         if let task = self.task {
