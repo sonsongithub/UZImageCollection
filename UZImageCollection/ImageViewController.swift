@@ -15,17 +15,16 @@ class ImageViewController: UIViewController, ImageDownloader {
     let imageCollectionViewController:ImageCollectionViewController
     let indicator = UIActivityIndicatorView(activityIndicatorStyle:.Gray)
     
-    var  maximumZoomScale:CGFloat = 0
-    var  minimumZoomScale:CGFloat = 0
+    var maximumZoomScale:CGFloat = 0
+    var minimumZoomScale:CGFloat = 0
     var imageURL = NSURL()
-    var imageURLHash = ""
     var task:NSURLSessionDataTask? = nil
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
-    func updateImageView(image:UIImage) {
+    func updateImageView(image:UIImage, thumbnail:UIImage?) {
         self.imageView.image = image
         self.imageView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: image.size)
     

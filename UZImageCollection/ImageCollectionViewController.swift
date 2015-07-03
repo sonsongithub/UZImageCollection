@@ -171,7 +171,7 @@ public class ImageCollectionViewController : UICollectionViewController, UIColle
     public override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if let cell = collectionView.cellForItemAtIndexPath(indexPath) as? ImageCollectionViewCell {
             
-            if let sourceImage = cell.imageView.image {
+            if let sourceImage = cell.fullImage() {
                 
                 cell.hidden = true
                 
@@ -179,7 +179,7 @@ public class ImageCollectionViewController : UICollectionViewController, UIColle
                 whiteBackgroundView.alpha = 0
                 whiteBackgroundView.backgroundColor = UIColor.whiteColor()
             
-                let imageView = UIImageView(image: cell.imageView.image)
+                let imageView = UIImageView(image: sourceImage)
                 
                 imageView.contentMode = .ScaleAspectFill
                 imageView.clipsToBounds = true
@@ -218,7 +218,7 @@ public class ImageCollectionViewController : UICollectionViewController, UIColle
     
     public override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as UICollectionViewCell
-        
+        cell.prepareForReuse()
         if let cell = cell as? ImageCollectionViewCell {
             let imageURL = collection.URLList[indexPath.row]
             cell.imageURL = imageURL

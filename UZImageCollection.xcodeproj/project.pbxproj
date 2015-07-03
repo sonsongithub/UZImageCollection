@@ -11,6 +11,7 @@
 		143AF5041B444E8900265644 /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 143AF4E61B444E3A00265644 /* CommonCrypto.framework */; };
 		1462B6BA1B443F3C00E4BB78 /* objc-header.h in Headers */ = {isa = PBXBuildFile; fileRef = 1462B6B91B443F3C00E4BB78 /* objc-header.h */; };
 		147B16631B4660DE000844A3 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147B16621B4660DE000844A3 /* ImageDownloader.swift */; };
+		147B16641B4669BF000844A3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14FF4CBD1B2392F2007AED39 /* Images.xcassets */; };
 		14C6263F1B44CB7E00F319CF /* CommonCrypto.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 14C6263B1B44CB7E00F319CF /* CommonCrypto.xcconfig */; };
 		14C626411B44D8FD00F319CF /* img.json in Resources */ = {isa = PBXBuildFile; fileRef = 14C626401B44D8FD00F319CF /* img.json */; };
 		14C626421B44F83600F319CF /* UZImageCollection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14FF4C921B239166007AED39 /* UZImageCollection.framework */; };
@@ -24,7 +25,6 @@
 		14FF4CB71B2392F2007AED39 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FF4CB61B2392F2007AED39 /* AppDelegate.swift */; };
 		14FF4CB91B2392F2007AED39 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FF4CB81B2392F2007AED39 /* ViewController.swift */; };
 		14FF4CBC1B2392F2007AED39 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14FF4CBA1B2392F2007AED39 /* Main.storyboard */; };
-		14FF4CBE1B2392F2007AED39 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14FF4CBD1B2392F2007AED39 /* Images.xcassets */; };
 		14FF4CC11B2392F2007AED39 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14FF4CBF1B2392F2007AED39 /* LaunchScreen.xib */; };
 		14FF4CD81B239ADC007AED39 /* ImageCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FF4CD41B239ADC007AED39 /* ImageCollection.swift */; };
 		14FF4CD91B239ADC007AED39 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FF4CD51B239ADC007AED39 /* ImageCollectionViewCell.swift */; };
@@ -393,6 +393,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				147B16641B4669BF000844A3 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -410,7 +411,6 @@
 				14FF4CBC1B2392F2007AED39 /* Main.storyboard in Resources */,
 				14C626411B44D8FD00F319CF /* img.json in Resources */,
 				14FF4CC11B2392F2007AED39 /* LaunchScreen.xib in Resources */,
-				14FF4CBE1B2392F2007AED39 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

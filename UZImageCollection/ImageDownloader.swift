@@ -15,19 +15,34 @@ protocol ImageDownloader : class {
     var imageURLHash:String {get}
     var task:NSURLSessionDataTask? {set get}
     var imageURL:NSURL {set get}
+    var errorImage:UIImage {get}
     
     func cachePath() -> String
     func loadImageFromCache() -> UIImage?
     func reload()
     func startDownloadingImage()
     func cancelDownloadingImage()
-    func updateImageView(image:UIImage)
+    func updateImageView(image:UIImage, thumbnail:UIImage?)
 }
 
 extension ImageDownloader {
     
+    var errorImage:UIImage {
+        return UIImage(named: "errorImage")!
+    }
+    
     var imageURLHash:String {
-        return md5(self.imageURL.absoluteString)
+        return self.imageURL.absoluteString.md5
+    }
+    
+    func createThumbnail(image:UIImage) -> UIImage {
+        let scale = image.size.width > image.size.height ? 120 / image.size.width : 120 / image.size.height
+        let size = CGSize(width: image.size.width * scale, height: image.size.height * scale)
+        UIGraphicsBeginImageContext(size)
+        image.drawInRect(CGRectMake(0, 0, size.width, size.height))
+        let resizeImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return resizeImage
     }
     
     func loadImageFromCache() -> UIImage? {
@@ -49,16 +64,34 @@ extension ImageDownloader {
         return cachePath.stringByAppendingPathComponent(imageURLHash)
     }
     
+    func thumbnailPath() -> String {
+        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+        let cacheRootPath:String = paths[0]
+        let cachePath = cacheRootPath.stringByAppendingPathComponent("thumbnail")
+        do {
+            try NSFileManager.defaultManager().createDirectoryAtPath(cachePath, withIntermediateDirectories: true, attributes: [:])
+        } catch let error {
+            print(error)
+        }
+        return cachePath.stringByAppendingPathComponent(imageURLHash)
+    }
+    
     func startDownloadingImage() {
         let request = NSURLRequest(URL: imageURL)
         if let task = NSURLSession.sharedSession().dataTaskWithRequest(request, completionHandler:{ (data, response, error) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 if let data:NSData = data, let image = UIImage(data: data) {
                     print("finish downloading")
-                    self.updateImageView(image)
+                    let resizedImage = self.createThumbnail(image)
+                    if let resizedData = UIImagePNGRepresentation(resizedImage) {
+                        resizedData.writeToFile(self.thumbnailPath(), atomically: false)
+                    }
                     data.writeToFile(self.cachePath(), atomically: false)
+                    self.updateImageView(image, thumbnail:resizedImage)
+                    NSNotificationCenter.defaultCenter().postNotificationName("didDownloadImage", object: nil, userInfo: ["URL":self.imageURLHash])
                 }
                 else {
+                    self.updateImageView(self.errorImage, thumbnail:nil)
                     print("error downloading")
                 }
                 if let error = error {
@@ -78,7 +111,7 @@ extension ImageDownloader {
     func reload() {
         // reload image
         if let image = loadImageFromCache() {
-            updateImageView(image)
+            updateImageView(image, thumbnail:nil)
             indicator.stopAnimating()
         }
         else {

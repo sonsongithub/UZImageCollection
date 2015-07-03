@@ -33,16 +33,18 @@ class ViewController: UIViewController {
                     if let url = NSURL(string:string) { return url }
                     return nil
                 })
-                let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true)
-                let cacheRootPath:String = paths[0]
-                let cachePath = cacheRootPath.stringByAppendingPathComponent("cache")
-                if let files = NSFileManager.defaultManager().subpathsAtPath(cachePath) {
-                    for file in files {
-                        let path = cachePath.stringByAppendingPathComponent(file)
-                        do {
-                            try NSFileManager.defaultManager().removeItemAtPath(path)
-                        } catch let error {
-                            print(error)
+                for folder in ["cache", "thumbnail"] {
+                    let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+                    let cacheRootPath:String = paths[0]
+                    let cachePath = cacheRootPath.stringByAppendingPathComponent(folder)
+                    if let files = NSFileManager.defaultManager().subpathsAtPath(cachePath) {
+                        for file in files {
+                            let path = cachePath.stringByAppendingPathComponent(file)
+                            do {
+                                try NSFileManager.defaultManager().removeItemAtPath(path)
+                            } catch let error {
+                                print(error)
+                            }
                         }
                     }
                 }
