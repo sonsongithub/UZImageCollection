@@ -36,13 +36,14 @@ class ViewController: UIViewController {
                 let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true)
                 let cacheRootPath:String = paths[0]
                 let cachePath = cacheRootPath.stringByAppendingPathComponent("cache")
-                for url in URLList {
-                    let path = cachePath.stringByAppendingPathComponent(url.absoluteString.md5)
-                    
-                    do {
-//                        try NSFileManager.defaultManager().removeItemAtPath(path)
-                    } catch let error {
-//                        print(error)
+                if let files = NSFileManager.defaultManager().subpathsAtPath(cachePath) {
+                    for file in files {
+                        let path = cachePath.stringByAppendingPathComponent(file)
+                        do {
+                            try NSFileManager.defaultManager().removeItemAtPath(path)
+                        } catch let error {
+                            print(error)
+                        }
                     }
                 }
                 

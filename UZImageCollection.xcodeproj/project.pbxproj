@@ -10,6 +10,7 @@
 		1423BB9B1B2E19C100D65ECE /* ImageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1423BB9A1B2E19C100D65ECE /* ImageInfo.swift */; };
 		143AF5041B444E8900265644 /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 143AF4E61B444E3A00265644 /* CommonCrypto.framework */; };
 		1462B6BA1B443F3C00E4BB78 /* objc-header.h in Headers */ = {isa = PBXBuildFile; fileRef = 1462B6B91B443F3C00E4BB78 /* objc-header.h */; };
+		147B16631B4660DE000844A3 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147B16621B4660DE000844A3 /* ImageDownloader.swift */; };
 		14C6263F1B44CB7E00F319CF /* CommonCrypto.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 14C6263B1B44CB7E00F319CF /* CommonCrypto.xcconfig */; };
 		14C626411B44D8FD00F319CF /* img.json in Resources */ = {isa = PBXBuildFile; fileRef = 14C626401B44D8FD00F319CF /* img.json */; };
 		14C626421B44F83600F319CF /* UZImageCollection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14FF4C921B239166007AED39 /* UZImageCollection.framework */; };
@@ -75,6 +76,7 @@
 		143AF4E61B444E3A00265644 /* CommonCrypto.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CommonCrypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		143AF4EA1B444E3A00265644 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1462B6B91B443F3C00E4BB78 /* objc-header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "objc-header.h"; path = "../UZImageCollection/objc-header.h"; sourceTree = "<group>"; };
+		147B16621B4660DE000844A3 /* ImageDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
 		14C6263B1B44CB7E00F319CF /* CommonCrypto.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = CommonCrypto.xcconfig; sourceTree = "<group>"; };
 		14C6263C1B44CB7E00F319CF /* iphoneos.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = iphoneos.modulemap; sourceTree = "<group>"; };
 		14C6263D1B44CB7E00F319CF /* iphonesimulator.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = iphonesimulator.modulemap; sourceTree = "<group>"; };
@@ -176,9 +178,10 @@
 				14FF4C971B239166007AED39 /* UZImageCollection.h */,
 				14FF4CD41B239ADC007AED39 /* ImageCollection.swift */,
 				1423BB9A1B2E19C100D65ECE /* ImageInfo.swift */,
+				147B16621B4660DE000844A3 /* ImageDownloader.swift */,
+				14FF4CD71B239ADC007AED39 /* ImageViewController.swift */,
 				14FF4CD51B239ADC007AED39 /* ImageCollectionViewCell.swift */,
 				14FF4CD61B239ADC007AED39 /* ImageCollectionViewController.swift */,
-				14FF4CD71B239ADC007AED39 /* ImageViewController.swift */,
 				14C985B11B24DB31000FE9EC /* ImageViewPageController.swift */,
 				14FF4C951B239166007AED39 /* Supporting Files */,
 			);
@@ -427,6 +430,7 @@
 			files = (
 				14FF4CDA1B239ADC007AED39 /* ImageCollectionViewController.swift in Sources */,
 				14C985B21B24DB31000FE9EC /* ImageViewPageController.swift in Sources */,
+				147B16631B4660DE000844A3 /* ImageDownloader.swift in Sources */,
 				14FF4CD91B239ADC007AED39 /* ImageCollectionViewCell.swift in Sources */,
 				1423BB9B1B2E19C100D65ECE /* ImageInfo.swift in Sources */,
 				14FF4CDB1B239ADC007AED39 /* ImageViewController.swift in Sources */,
