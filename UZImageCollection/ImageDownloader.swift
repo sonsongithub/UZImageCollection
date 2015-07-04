@@ -36,7 +36,7 @@ extension ImageDownloader {
     }
     
     func createThumbnail(image:UIImage) -> UIImage {
-        let scale = image.size.width > image.size.height ? 120 / image.size.width : 120 / image.size.height
+        let scale = image.size.width > image.size.height ? 240 / image.size.width : 240 / image.size.height
         let size = CGSize(width: image.size.width * scale, height: image.size.height * scale)
         UIGraphicsBeginImageContext(size)
         image.drawInRect(CGRectMake(0, 0, size.width, size.height))
