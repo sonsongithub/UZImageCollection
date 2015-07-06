@@ -151,7 +151,10 @@ public class ImageCollectionViewController : UICollectionViewController, UIColle
             }
         }
     }
-    
+}
+
+extension ImageCollectionViewController {
+
     public override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }

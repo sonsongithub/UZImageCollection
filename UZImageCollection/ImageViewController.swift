@@ -24,15 +24,49 @@ class ImageViewController: UIViewController, ImageDownloader {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
-    func updateImageView(image:UIImage, thumbnail:UIImage?) {
-        self.imageView.image = image
-        self.imageView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: image.size)
+    required init(coder aDecoder: NSCoder) {
+        self.index = 0
+        self.imageCollectionViewController = ImageCollectionViewController(coder: aDecoder)
+        super.init(coder: aDecoder)
+    }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupSubviews()
+    }
+    
+    override func willMoveToParentViewController(parent: UIViewController?) {
+        super.willMoveToParentViewController(parent)
+        if parent == nil {
+            cancelDownloadingImage()
+        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        NSNotificationCenter.defaultCenter().postNotificationName("did", object: nil, userInfo: ["index":self.index])
+    }
+    
+    init(index:Int, imageCollectionViewController:ImageCollectionViewController) {
+        self.index = index
+        self.imageCollectionViewController = imageCollectionViewController
+        scrollView.addSubview(imageView)
+        super.init(nibName: nil, bundle: nil)
+        if imageCollectionViewController.collection.URLList.indices ~= index {
+            self.imageURL = imageCollectionViewController.collection.URLList[index]
+        }
+        reload()
+    }
+    
+    class func controllerWithIndex(index:Int, imageCollectionViewController:ImageCollectionViewController) -> ImageViewController {
+        let con = ImageViewController(index:index, imageCollectionViewController:imageCollectionViewController)
+        return con
+    }
+}
+
+extension ImageViewController {
+    func setupScrollViewScale(imageSize:CGSize) {
         scrollView.frame = self.view.bounds;
-        
-        let imageSize = imageView.image!.size ?? CGSizeZero
-        
-        print(imageSize)
         
         let boundsSize = self.view.bounds
         
@@ -59,6 +93,13 @@ class ImageViewController: UIViewController, ImageDownloader {
         
         scrollView.contentSize = imageView.image!.size
         scrollView.zoomScale = scrollView.minimumZoomScale;
+    }
+    
+    func updateImageView(image:UIImage, thumbnail:UIImage?) {
+        imageView.hidden = false
+        self.imageView.image = image
+        self.imageView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: image.size)
+        self.setupScrollViewScale(image.size)
         self.updateImageCenter()
     }
     
@@ -79,38 +120,11 @@ class ImageViewController: UIViewController, ImageDownloader {
         else {
             frameToCenter.origin.y = 0;
         }
-     
+        
         imageView.frame = frameToCenter
     }
     
-    init(index:Int, imageCollectionViewController:ImageCollectionViewController) {
-        self.index = index
-        self.imageCollectionViewController = imageCollectionViewController
-        scrollView.addSubview(imageView)
-        super.init(nibName: nil, bundle: nil)
-        if imageCollectionViewController.collection.URLList.indices ~= index {
-            self.imageURL = imageCollectionViewController.collection.URLList[index]
-        }
-        reload()
-    }
-    
-    required init(coder aDecoder: NSCoder) {
-        self.index = 0
-        self.imageCollectionViewController = ImageCollectionViewController(coder: aDecoder)
-        super.init(coder: aDecoder)
-    }
-    
-    class func controllerWithIndex(index:Int, imageCollectionViewController:ImageCollectionViewController) -> ImageViewController {
-        let con = ImageViewController(index:index, imageCollectionViewController:imageCollectionViewController)
-        return con
-    }
-}
-
-extension ImageViewController {
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    func setupSubviews() {
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.bouncesZoom = true
@@ -132,20 +146,6 @@ extension ImageViewController {
         
         self.view.addConstraint(NSLayoutConstraint(item: indicator, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0))
         self.view.addConstraint(NSLayoutConstraint(item: indicator, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0))
-    }
-    
-    override func willMoveToParentViewController(parent: UIViewController?) {
-        super.willMoveToParentViewController(parent)
-        print("willMoveToParentViewController")
-        print(parent)
-        if parent == nil {
-            cancelDownloadingImage()
-        }
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        NSNotificationCenter.defaultCenter().postNotificationName("did", object: nil, userInfo: ["index":self.index])
     }
 }
 

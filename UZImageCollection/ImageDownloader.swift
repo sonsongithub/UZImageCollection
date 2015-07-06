@@ -7,6 +7,27 @@
 //
 
 import Foundation
+import CommonCrypto
+
+extension String {
+    var md5: String {
+        let str = self.cStringUsingEncoding(NSUTF8StringEncoding)
+        let strLen = CC_LONG(self.lengthOfBytesUsingEncoding(NSUTF8StringEncoding))
+        let digestLen = Int(CC_MD5_DIGEST_LENGTH)
+        let result = UnsafeMutablePointer<CUnsignedChar>.alloc(digestLen)
+        
+        CC_MD5(str!, strLen, result)
+        
+        let hash = NSMutableString()
+        for i in 0..<digestLen {
+            hash.appendFormat("%02x", result[i])
+        }
+        
+        result.dealloc(digestLen)
+        
+        return String(format: hash as String)
+    }
+}
 
 protocol ImageDownloader : class {
     var imageView:UIImageView {get}
@@ -78,30 +99,37 @@ extension ImageDownloader {
     
     func startDownloadingImage() {
         let request = NSURLRequest(URL: imageURL)
-        if let task = NSURLSession.sharedSession().dataTaskWithRequest(request, completionHandler:{ (data, response, error) -> Void in
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request, completionHandler:{ (data, response, error) -> Void in
+            var originalImage:UIImage? = nil
+            var thumbnailImage:UIImage? = nil
+            // save image
+            if let data:NSData = data, let image = UIImage(data: data) {
+                let resizedImage = self.createThumbnail(image)
+                if let resizedData = UIImagePNGRepresentation(resizedImage) {
+                    resizedData.writeToFile(self.thumbnailPath(), atomically: false)
+                }
+                data.writeToFile(self.cachePath(), atomically: false)
+                
+                originalImage = image
+                thumbnailImage = resizedImage
+            }
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                if let data:NSData = data, let image = UIImage(data: data) {
-                    print("finish downloading")
-                    let resizedImage = self.createThumbnail(image)
-                    if let resizedData = UIImagePNGRepresentation(resizedImage) {
-                        resizedData.writeToFile(self.thumbnailPath(), atomically: false)
-                    }
-                    data.writeToFile(self.cachePath(), atomically: false)
-                    self.updateImageView(image, thumbnail:resizedImage)
-                    NSNotificationCenter.defaultCenter().postNotificationName("didDownloadImage", object: nil, userInfo: ["URL":self.imageURLHash])
-                }
-                else {
-                    self.updateImageView(self.errorImage, thumbnail:nil)
-                    print("error downloading")
-                }
-                if let error = error {
-                    print(error.description)
-                }
                 self.indicator.stopAnimating()
+                if self.imageURL == request.URL {
+                    // load image
+                    if let originalImage = originalImage {
+                        self.updateImageView(originalImage, thumbnail:thumbnailImage)
+                    }
+                    else {
+                        self.imageView.hidden = false
+                        self.updateImageView(self.errorImage, thumbnail:nil)
+                    }
+                }
             })
             self.task = nil
-            
-        }) {
+        })
+        if let task = task {
+            self.imageView.hidden = true
             indicator.startAnimating()
             self.task = task
             task.resume()
@@ -115,13 +143,14 @@ extension ImageDownloader {
             indicator.stopAnimating()
         }
         else {
+            self.imageView.hidden = true
             startDownloadingImage()
         }
     }
     
     func cancelDownloadingImage() {
         if let task = self.task {
-            print("cancel")
+            print("try to cancel - \(self.imageURL.absoluteString)")
             task.cancel()
             self.task = nil
         }
