@@ -40,7 +40,7 @@ protocol ImageDownloader : class {
     
     func cachePath() -> String
     func loadImageFromCache() -> UIImage?
-    func reload()
+    func reload(decelerating:Bool)
     func startDownloadingImage()
     func cancelDownloadingImage()
     func updateImageView(image:UIImage, thumbnail:UIImage?)
@@ -98,6 +98,10 @@ extension ImageDownloader {
     }
     
     func startDownloadingImage() {
+        if self.task != nil {
+            return
+        }
+        
         let request = NSURLRequest(URL: imageURL)
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request, completionHandler:{ (data, response, error) -> Void in
             var originalImage:UIImage? = nil
@@ -136,15 +140,20 @@ extension ImageDownloader {
         }
     }
     
-    func reload() {
+    func reload(decelerating:Bool) {
         // reload image
+        
         if let image = loadImageFromCache() {
             updateImageView(image, thumbnail:nil)
             indicator.stopAnimating()
         }
-        else {
+        else if !decelerating {
             self.imageView.hidden = true
             startDownloadingImage()
+        }
+        else {
+            self.imageView.hidden = true
+            indicator.startAnimating()
         }
     }
     

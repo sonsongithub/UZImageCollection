@@ -55,7 +55,7 @@ class ImageViewController: UIViewController, ImageDownloader {
         if imageCollectionViewController.collection.URLList.indices ~= index {
             self.imageURL = imageCollectionViewController.collection.URLList[index]
         }
-        reload()
+        reload(false)
     }
     
     class func controllerWithIndex(index:Int, imageCollectionViewController:ImageCollectionViewController) -> ImageViewController {

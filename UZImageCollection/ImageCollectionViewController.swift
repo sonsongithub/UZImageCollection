@@ -154,6 +154,23 @@ public class ImageCollectionViewController : UICollectionViewController, UIColle
 }
 
 extension ImageCollectionViewController {
+    
+    public override func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+        print("scrollViewDidEndScrollingAnimation")
+    }
+    
+    public override  func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        if let collectionView = self.collectionView {
+            for var cell in collectionView.visibleCells() {
+                if let cell = cell as? ImageCollectionViewCell {
+                    cell.reload(false)
+                }
+            }
+        }
+    }
+    
+    public override func scrollViewDidScroll(scrollView: UIScrollView) {
+    }
 
     public override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
@@ -225,7 +242,8 @@ extension ImageCollectionViewController {
         if let cell = cell as? ImageCollectionViewCell {
             let imageURL = collection.URLList[indexPath.row]
             cell.imageURL = imageURL
-            cell.reload()
+            
+            cell.reload(collectionView.decelerating)
         }
         
         return cell
