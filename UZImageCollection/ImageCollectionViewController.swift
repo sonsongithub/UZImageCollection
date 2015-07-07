@@ -161,7 +161,7 @@ extension ImageCollectionViewController {
     
     public override  func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         if let collectionView = self.collectionView {
-            for var cell in collectionView.visibleCells() {
+            for cell in collectionView.visibleCells() {
                 if let cell = cell as? ImageCollectionViewCell {
                     cell.reload(false)
                 }

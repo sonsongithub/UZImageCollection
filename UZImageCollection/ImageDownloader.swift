@@ -106,18 +106,33 @@ extension ImageDownloader {
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request, completionHandler:{ (data, response, error) -> Void in
             var originalImage:UIImage? = nil
             var thumbnailImage:UIImage? = nil
+            var thumbnailData:NSData? = nil
             // save image
             if let data:NSData = data, let image = UIImage(data: data) {
-                let resizedImage = self.createThumbnail(image)
-                if let resizedData = UIImagePNGRepresentation(resizedImage) {
-                    resizedData.writeToFile(self.thumbnailPath(), atomically: false)
+                thumbnailImage = self.createThumbnail(image)
+                if let thumbnailImage = thumbnailImage {
+                    thumbnailData = UIImagePNGRepresentation(thumbnailImage)
                 }
-                data.writeToFile(self.cachePath(), atomically: false)
-                
                 originalImage = image
-                thumbnailImage = resizedImage
             }
+            
+            let semaphore = dispatch_semaphore_create(1);
+            dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+            if !NSFileManager.defaultManager().isReadableFileAtPath(self.thumbnailPath()) {
+                if let thumbnailData = thumbnailData {
+                    thumbnailData.writeToFile(self.thumbnailPath(), atomically: false)
+                }
+            }
+            
+            if !NSFileManager.defaultManager().isReadableFileAtPath(self.cachePath()) {
+                if let data = data {
+                    data.writeToFile(self.cachePath(), atomically: false)
+                }
+            }
+            dispatch_semaphore_signal(semaphore);
+            
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
+
                 self.indicator.stopAnimating()
                 if self.imageURL == request.URL {
                     // load image
@@ -125,7 +140,6 @@ extension ImageDownloader {
                         self.updateImageView(originalImage, thumbnail:thumbnailImage)
                     }
                     else {
-                        self.imageView.hidden = false
                         self.updateImageView(self.errorImage, thumbnail:nil)
                     }
                 }
