@@ -24,9 +24,9 @@ class ImageViewController: UIViewController, ImageDownloader {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         self.index = 0
-        self.imageCollectionViewController = ImageCollectionViewController(coder: aDecoder)
+        self.imageCollectionViewController = ImageCollectionViewController(collection: ImageCollection(newList: []))
         super.init(coder: aDecoder)
     }
     

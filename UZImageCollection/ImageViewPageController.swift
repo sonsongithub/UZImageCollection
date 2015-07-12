@@ -52,9 +52,9 @@ class ImageViewPageController: UIPageViewController, UIPageViewControllerDataSou
         self.delegate = self
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         self.collection = ImageCollection(newList:[])
-        self.imageCollectionViewController = ImageCollectionViewController(coder: aDecoder)
+        self.imageCollectionViewController = ImageCollectionViewController(collection: ImageCollection(newList: []))
         super.init(coder: aDecoder)
     }
     

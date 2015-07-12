@@ -47,7 +47,7 @@ public class ImageCollectionViewController : UICollectionViewController, UIColle
         super.init(collectionViewLayout: layout)
     }
     
-    public required init(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         self.collection = ImageCollection(newList: [])
         super.init(coder: aDecoder)
     }
