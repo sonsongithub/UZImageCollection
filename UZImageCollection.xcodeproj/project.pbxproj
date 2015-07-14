@@ -9,7 +9,10 @@
 /* Begin PBXBuildFile section */
 		140B474A1B47704B00E38502 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14FF4CBD1B2392F2007AED39 /* Images.xcassets */; };
 		143AF5041B444E8900265644 /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 143AF4E61B444E3A00265644 /* CommonCrypto.framework */; };
-		1462B6BA1B443F3C00E4BB78 /* objc-header.h in Headers */ = {isa = PBXBuildFile; fileRef = 1462B6B91B443F3C00E4BB78 /* objc-header.h */; };
+		1455FFDE1B551A5C00B33706 /* FLAnimatedImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 1455FFDA1B551A5C00B33706 /* FLAnimatedImage.h */; };
+		1455FFDF1B551A5C00B33706 /* FLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1455FFDB1B551A5C00B33706 /* FLAnimatedImage.m */; };
+		1455FFE01B551A5C00B33706 /* FLAnimatedImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1455FFDC1B551A5C00B33706 /* FLAnimatedImageView.h */; };
+		1455FFE11B551A5C00B33706 /* FLAnimatedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1455FFDD1B551A5C00B33706 /* FLAnimatedImageView.m */; };
 		147B16631B4660DE000844A3 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147B16621B4660DE000844A3 /* ImageDownloader.swift */; };
 		147B16641B4669BF000844A3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14FF4CBD1B2392F2007AED39 /* Images.xcassets */; };
 		14C626411B44D8FD00F319CF /* img.json in Resources */ = {isa = PBXBuildFile; fileRef = 14C626401B44D8FD00F319CF /* img.json */; };
@@ -77,7 +80,10 @@
 		1455FFD41B55173B00B33706 /* iphoneos.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; name = iphoneos.modulemap; path = UZImageCollection/vendor/CommonCrypto/iphoneos.modulemap; sourceTree = SOURCE_ROOT; };
 		1455FFD51B55173B00B33706 /* iphonesimulator.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; name = iphonesimulator.modulemap; path = UZImageCollection/vendor/CommonCrypto/iphonesimulator.modulemap; sourceTree = SOURCE_ROOT; };
 		1455FFD61B55173B00B33706 /* macosx.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; name = macosx.modulemap; path = UZImageCollection/vendor/CommonCrypto/macosx.modulemap; sourceTree = SOURCE_ROOT; };
-		1462B6B91B443F3C00E4BB78 /* objc-header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "objc-header.h"; path = "../UZImageCollection/objc-header.h"; sourceTree = "<group>"; };
+		1455FFDA1B551A5C00B33706 /* FLAnimatedImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLAnimatedImage.h; path = vendor/FLAnimatedImage/FLAnimatedImageDemo/FLAnimatedImage/FLAnimatedImage.h; sourceTree = "<group>"; };
+		1455FFDB1B551A5C00B33706 /* FLAnimatedImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLAnimatedImage.m; path = vendor/FLAnimatedImage/FLAnimatedImageDemo/FLAnimatedImage/FLAnimatedImage.m; sourceTree = "<group>"; };
+		1455FFDC1B551A5C00B33706 /* FLAnimatedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLAnimatedImageView.h; path = vendor/FLAnimatedImage/FLAnimatedImageDemo/FLAnimatedImage/FLAnimatedImageView.h; sourceTree = "<group>"; };
+		1455FFDD1B551A5C00B33706 /* FLAnimatedImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLAnimatedImageView.m; path = vendor/FLAnimatedImage/FLAnimatedImageDemo/FLAnimatedImage/FLAnimatedImageView.m; sourceTree = "<group>"; };
 		147B16621B4660DE000844A3 /* ImageDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
 		14C626401B44D8FD00F319CF /* img.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = img.json; path = UZImageCollection/img.json; sourceTree = SOURCE_ROOT; };
 		14C985B11B24DB31000FE9EC /* ImageViewPageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewPageController.swift; sourceTree = "<group>"; };
@@ -145,7 +151,28 @@
 				1455FFD51B55173B00B33706 /* iphonesimulator.modulemap */,
 				1455FFD61B55173B00B33706 /* macosx.modulemap */,
 			);
-			path = CommonCrypto;
+			name = CommonCrypto;
+			path = ../CommonCrypto;
+			sourceTree = "<group>";
+		};
+		1455FFD91B55182500B33706 /* vendor */ = {
+			isa = PBXGroup;
+			children = (
+				1455FFE21B551A6800B33706 /* FLAnimatedImage */,
+				143AF4E71B444E3A00265644 /* CommonCrypto */,
+			);
+			name = vendor;
+			sourceTree = "<group>";
+		};
+		1455FFE21B551A6800B33706 /* FLAnimatedImage */ = {
+			isa = PBXGroup;
+			children = (
+				1455FFDA1B551A5C00B33706 /* FLAnimatedImage.h */,
+				1455FFDB1B551A5C00B33706 /* FLAnimatedImage.m */,
+				1455FFDC1B551A5C00B33706 /* FLAnimatedImageView.h */,
+				1455FFDD1B551A5C00B33706 /* FLAnimatedImageView.m */,
+			);
+			name = FLAnimatedImage;
 			sourceTree = "<group>";
 		};
 		14FF4C881B239166007AED39 = {
@@ -154,7 +181,6 @@
 				14FF4C941B239166007AED39 /* UZImageCollection */,
 				14FF4CB31B2392F2007AED39 /* UZImageCollectionSample */,
 				14FF4CA11B239166007AED39 /* UZImageCollectionTests */,
-				143AF4E71B444E3A00265644 /* CommonCrypto */,
 				14FF4C931B239166007AED39 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -173,6 +199,7 @@
 		14FF4C941B239166007AED39 /* UZImageCollection */ = {
 			isa = PBXGroup;
 			children = (
+				1455FFD91B55182500B33706 /* vendor */,
 				14FF4C971B239166007AED39 /* UZImageCollection.h */,
 				14FF4CD41B239ADC007AED39 /* ImageCollection.swift */,
 				147B16621B4660DE000844A3 /* ImageDownloader.swift */,
@@ -214,7 +241,6 @@
 			isa = PBXGroup;
 			children = (
 				14C626401B44D8FD00F319CF /* img.json */,
-				1462B6B91B443F3C00E4BB78 /* objc-header.h */,
 				14FF4CB61B2392F2007AED39 /* AppDelegate.swift */,
 				14FF4CB81B2392F2007AED39 /* ViewController.swift */,
 				14FF4CBA1B2392F2007AED39 /* Main.storyboard */,
@@ -248,7 +274,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				14FF4C981B239166007AED39 /* UZImageCollection.h in Headers */,
-				1462B6BA1B443F3C00E4BB78 /* objc-header.h in Headers */,
+				1455FFDE1B551A5C00B33706 /* FLAnimatedImage.h in Headers */,
+				1455FFE01B551A5C00B33706 /* FLAnimatedImageView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,7 +453,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				14FF4CDA1B239ADC007AED39 /* ImageCollectionViewController.swift in Sources */,
+				1455FFDF1B551A5C00B33706 /* FLAnimatedImage.m in Sources */,
 				14C985B21B24DB31000FE9EC /* ImageViewPageController.swift in Sources */,
+				1455FFE11B551A5C00B33706 /* FLAnimatedImageView.m in Sources */,
 				147B16631B4660DE000844A3 /* ImageDownloader.swift in Sources */,
 				14FF4CD91B239ADC007AED39 /* ImageCollectionViewCell.swift in Sources */,
 				14FF4CDB1B239ADC007AED39 /* ImageViewController.swift in Sources */,
@@ -627,6 +656,7 @@
 		14FF4CA91B239166007AED39 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yuichi Yoshida (AK9FYY958C)";
 				DEFINES_MODULE = YES;
@@ -641,12 +671,14 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		14FF4CAA1B239166007AED39 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -712,7 +744,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sonson.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "205d4d71-5ba3-4e8a-9aad-9566ae53f194";
-				SWIFT_OBJC_BRIDGING_HEADER = "$SRCROOT/UZImageCollection/objc-header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Debug;
 		};
@@ -729,7 +761,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sonson.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "205d4d71-5ba3-4e8a-9aad-9566ae53f194";
-				SWIFT_OBJC_BRIDGING_HEADER = "$SRCROOT/UZImageCollection/objc-header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Release;
 		};

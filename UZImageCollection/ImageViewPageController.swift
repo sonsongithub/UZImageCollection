@@ -78,6 +78,9 @@ class ImageViewPageController: UIPageViewController, UIPageViewControllerDataSou
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
         if let viewController = viewController as? ImageViewController {
             let index = viewController.index + 1
+            if collection.count <= index {
+                return nil
+            }
             return ImageViewController(index: index, imageCollectionViewController:imageCollectionViewController)
         }
         return nil
@@ -86,6 +89,9 @@ class ImageViewPageController: UIPageViewController, UIPageViewControllerDataSou
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
         if let viewController = viewController as? ImageViewController {
             let index = viewController.index - 1
+            if index < 0 {
+                return nil
+            }
             return ImageViewController(index: index, imageCollectionViewController:imageCollectionViewController)
         }
         return nil

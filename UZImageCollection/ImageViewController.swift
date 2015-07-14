@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FLAnimatedImage
 
 class ImageViewController: UIViewController, ImageDownloader {
     let index:Int
@@ -96,6 +97,17 @@ extension ImageViewController {
     }
     
     func updateImageView(image:UIImage, thumbnail:UIImage?) {
+        
+        let path = self.cachePath()
+        let data = NSData(contentsOfFile: path)
+        let animatedImage:FLAnimatedImage? = FLAnimatedImage(animatedGIFData: data)
+        
+        let animatedView = FLAnimatedImageView(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: self.view.frame.size))
+        animatedView.contentMode = .ScaleAspectFit
+        animatedView.animatedImage = animatedImage
+        
+        self.view.addSubview(animatedView)
+        
         imageView.hidden = false
         self.imageView.image = image
         self.imageView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: image.size)
