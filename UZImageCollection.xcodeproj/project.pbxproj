@@ -9,12 +9,12 @@
 /* Begin PBXBuildFile section */
 		140B474A1B47704B00E38502 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14FF4CBD1B2392F2007AED39 /* Images.xcassets */; };
 		143AF5041B444E8900265644 /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 143AF4E61B444E3A00265644 /* CommonCrypto.framework */; };
-		1455FFDE1B551A5C00B33706 /* FLAnimatedImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 1455FFDA1B551A5C00B33706 /* FLAnimatedImage.h */; };
-		1455FFDF1B551A5C00B33706 /* FLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1455FFDB1B551A5C00B33706 /* FLAnimatedImage.m */; };
-		1455FFE01B551A5C00B33706 /* FLAnimatedImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1455FFDC1B551A5C00B33706 /* FLAnimatedImageView.h */; };
-		1455FFE11B551A5C00B33706 /* FLAnimatedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1455FFDD1B551A5C00B33706 /* FLAnimatedImageView.m */; };
 		147B16631B4660DE000844A3 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147B16621B4660DE000844A3 /* ImageDownloader.swift */; };
 		147B16641B4669BF000844A3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14FF4CBD1B2392F2007AED39 /* Images.xcassets */; };
+		148D88F51B55C97A001AD451 /* FLAnimatedImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 148D88F11B55C97A001AD451 /* FLAnimatedImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		148D88F61B55C97A001AD451 /* FLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 148D88F21B55C97A001AD451 /* FLAnimatedImage.m */; };
+		148D88F71B55C97A001AD451 /* FLAnimatedImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 148D88F31B55C97A001AD451 /* FLAnimatedImageView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		148D88F81B55C97A001AD451 /* FLAnimatedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 148D88F41B55C97A001AD451 /* FLAnimatedImageView.m */; };
 		14C626411B44D8FD00F319CF /* img.json in Resources */ = {isa = PBXBuildFile; fileRef = 14C626401B44D8FD00F319CF /* img.json */; };
 		14C626421B44F83600F319CF /* UZImageCollection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14FF4C921B239166007AED39 /* UZImageCollection.framework */; };
 		14C626431B44F83600F319CF /* UZImageCollection.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 14FF4C921B239166007AED39 /* UZImageCollection.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -80,11 +80,11 @@
 		1455FFD41B55173B00B33706 /* iphoneos.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; name = iphoneos.modulemap; path = UZImageCollection/vendor/CommonCrypto/iphoneos.modulemap; sourceTree = SOURCE_ROOT; };
 		1455FFD51B55173B00B33706 /* iphonesimulator.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; name = iphonesimulator.modulemap; path = UZImageCollection/vendor/CommonCrypto/iphonesimulator.modulemap; sourceTree = SOURCE_ROOT; };
 		1455FFD61B55173B00B33706 /* macosx.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; name = macosx.modulemap; path = UZImageCollection/vendor/CommonCrypto/macosx.modulemap; sourceTree = SOURCE_ROOT; };
-		1455FFDA1B551A5C00B33706 /* FLAnimatedImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLAnimatedImage.h; path = vendor/FLAnimatedImage/FLAnimatedImageDemo/FLAnimatedImage/FLAnimatedImage.h; sourceTree = "<group>"; };
-		1455FFDB1B551A5C00B33706 /* FLAnimatedImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLAnimatedImage.m; path = vendor/FLAnimatedImage/FLAnimatedImageDemo/FLAnimatedImage/FLAnimatedImage.m; sourceTree = "<group>"; };
-		1455FFDC1B551A5C00B33706 /* FLAnimatedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLAnimatedImageView.h; path = vendor/FLAnimatedImage/FLAnimatedImageDemo/FLAnimatedImage/FLAnimatedImageView.h; sourceTree = "<group>"; };
-		1455FFDD1B551A5C00B33706 /* FLAnimatedImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLAnimatedImageView.m; path = vendor/FLAnimatedImage/FLAnimatedImageDemo/FLAnimatedImage/FLAnimatedImageView.m; sourceTree = "<group>"; };
 		147B16621B4660DE000844A3 /* ImageDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
+		148D88F11B55C97A001AD451 /* FLAnimatedImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLAnimatedImage.h; path = vendor/FLAnimatedImage/FLAnimatedImageDemo/FLAnimatedImage/FLAnimatedImage.h; sourceTree = "<group>"; };
+		148D88F21B55C97A001AD451 /* FLAnimatedImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLAnimatedImage.m; path = vendor/FLAnimatedImage/FLAnimatedImageDemo/FLAnimatedImage/FLAnimatedImage.m; sourceTree = "<group>"; };
+		148D88F31B55C97A001AD451 /* FLAnimatedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLAnimatedImageView.h; path = vendor/FLAnimatedImage/FLAnimatedImageDemo/FLAnimatedImage/FLAnimatedImageView.h; sourceTree = "<group>"; };
+		148D88F41B55C97A001AD451 /* FLAnimatedImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLAnimatedImageView.m; path = vendor/FLAnimatedImage/FLAnimatedImageDemo/FLAnimatedImage/FLAnimatedImageView.m; sourceTree = "<group>"; };
 		14C626401B44D8FD00F319CF /* img.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = img.json; path = UZImageCollection/img.json; sourceTree = SOURCE_ROOT; };
 		14C985B11B24DB31000FE9EC /* ImageViewPageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewPageController.swift; sourceTree = "<group>"; };
 		14FF4C921B239166007AED39 /* UZImageCollection.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = UZImageCollection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -158,21 +158,13 @@
 		1455FFD91B55182500B33706 /* vendor */ = {
 			isa = PBXGroup;
 			children = (
-				1455FFE21B551A6800B33706 /* FLAnimatedImage */,
+				148D88F11B55C97A001AD451 /* FLAnimatedImage.h */,
+				148D88F21B55C97A001AD451 /* FLAnimatedImage.m */,
+				148D88F31B55C97A001AD451 /* FLAnimatedImageView.h */,
+				148D88F41B55C97A001AD451 /* FLAnimatedImageView.m */,
 				143AF4E71B444E3A00265644 /* CommonCrypto */,
 			);
 			name = vendor;
-			sourceTree = "<group>";
-		};
-		1455FFE21B551A6800B33706 /* FLAnimatedImage */ = {
-			isa = PBXGroup;
-			children = (
-				1455FFDA1B551A5C00B33706 /* FLAnimatedImage.h */,
-				1455FFDB1B551A5C00B33706 /* FLAnimatedImage.m */,
-				1455FFDC1B551A5C00B33706 /* FLAnimatedImageView.h */,
-				1455FFDD1B551A5C00B33706 /* FLAnimatedImageView.m */,
-			);
-			name = FLAnimatedImage;
 			sourceTree = "<group>";
 		};
 		14FF4C881B239166007AED39 = {
@@ -274,8 +266,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				14FF4C981B239166007AED39 /* UZImageCollection.h in Headers */,
-				1455FFDE1B551A5C00B33706 /* FLAnimatedImage.h in Headers */,
-				1455FFE01B551A5C00B33706 /* FLAnimatedImageView.h in Headers */,
+				148D88F51B55C97A001AD451 /* FLAnimatedImage.h in Headers */,
+				148D88F71B55C97A001AD451 /* FLAnimatedImageView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,9 +445,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				14FF4CDA1B239ADC007AED39 /* ImageCollectionViewController.swift in Sources */,
-				1455FFDF1B551A5C00B33706 /* FLAnimatedImage.m in Sources */,
+				148D88F61B55C97A001AD451 /* FLAnimatedImage.m in Sources */,
 				14C985B21B24DB31000FE9EC /* ImageViewPageController.swift in Sources */,
-				1455FFE11B551A5C00B33706 /* FLAnimatedImageView.m in Sources */,
+				148D88F81B55C97A001AD451 /* FLAnimatedImageView.m in Sources */,
 				147B16631B4660DE000844A3 /* ImageDownloader.swift in Sources */,
 				14FF4CD91B239ADC007AED39 /* ImageCollectionViewCell.swift in Sources */,
 				14FF4CDB1B239ADC007AED39 /* ImageViewController.swift in Sources */,

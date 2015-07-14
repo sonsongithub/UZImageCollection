@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import FLAnimatedImage
 
 class ImageViewController: UIViewController, ImageDownloader {
     let index:Int

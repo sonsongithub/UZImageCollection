@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FLAnimatedImage.h"
 
 //! Project version number for UZImageCollection.
 FOUNDATION_EXPORT double UZImageCollectionVersionNumber;
