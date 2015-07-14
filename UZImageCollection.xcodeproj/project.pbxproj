@@ -142,6 +142,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1419235E1B55D56800CB7B70 /* FLAnimatedImage */ = {
+			isa = PBXGroup;
+			children = (
+				148D88F11B55C97A001AD451 /* FLAnimatedImage.h */,
+				148D88F21B55C97A001AD451 /* FLAnimatedImage.m */,
+				148D88F31B55C97A001AD451 /* FLAnimatedImageView.h */,
+				148D88F41B55C97A001AD451 /* FLAnimatedImageView.m */,
+			);
+			name = FLAnimatedImage;
+			sourceTree = "<group>";
+		};
 		143AF4E71B444E3A00265644 /* CommonCrypto */ = {
 			isa = PBXGroup;
 			children = (
@@ -158,10 +169,7 @@
 		1455FFD91B55182500B33706 /* vendor */ = {
 			isa = PBXGroup;
 			children = (
-				148D88F11B55C97A001AD451 /* FLAnimatedImage.h */,
-				148D88F21B55C97A001AD451 /* FLAnimatedImage.m */,
-				148D88F31B55C97A001AD451 /* FLAnimatedImageView.h */,
-				148D88F41B55C97A001AD451 /* FLAnimatedImageView.m */,
+				1419235E1B55D56800CB7B70 /* FLAnimatedImage */,
 				143AF4E71B444E3A00265644 /* CommonCrypto */,
 			);
 			name = vendor;
