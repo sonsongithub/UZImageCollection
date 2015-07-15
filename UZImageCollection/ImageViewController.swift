@@ -8,6 +8,9 @@
 
 import UIKit
 
+let ImageViewControllerDidChangeCurrentImage = "ImageViewControllerDidChangeCurrentImage"
+let ImageViewControllerDidChangeCurrentImageIndexKey = "ImageViewControllerDidChangeCurrentImageIndexKey"
+
 class ImageViewController: UIViewController, ImageDownloader {
     let index:Int
     let scrollView = UIScrollView(frame: CGRectZero)
@@ -19,6 +22,8 @@ class ImageViewController: UIViewController, ImageDownloader {
     var minimumZoomScale:CGFloat = 0
     var imageURL = NSURL()
     var task:NSURLSessionDataTask? = nil
+    
+    /// for animated GIF
     var animatedImageView:FLAnimatedImageView? = nil
     
     deinit {
@@ -45,7 +50,7 @@ class ImageViewController: UIViewController, ImageDownloader {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        NSNotificationCenter.defaultCenter().postNotificationName("did", object: nil, userInfo: ["index":self.index])
+        NSNotificationCenter.defaultCenter().postNotificationName(ImageViewControllerDidChangeCurrentImage, object: nil, userInfo: [ImageViewControllerDidChangeCurrentImageIndexKey:self.index])
     }
     
     init(index:Int, imageCollectionViewController:ImageCollectionViewController) {
@@ -96,8 +101,7 @@ extension ImageViewController {
         scrollView.zoomScale = scrollView.minimumZoomScale;
     }
     
-    func updateImageView(image:UIImage, thumbnail:UIImage?) {
-        
+    func tryToLoadAnimatedGIF() {
         let path = self.cachePath()
         let data = NSData(contentsOfFile: path)
         if let animatedImage:FLAnimatedImage? = FLAnimatedImage(animatedGIFData: data) {
@@ -108,6 +112,10 @@ extension ImageViewController {
             self.animatedImageView = animatedImageView
             scrollView.userInteractionEnabled = false
         }
+    }
+    
+    func updateImageView(image:UIImage, thumbnail:UIImage?) {
+        tryToLoadAnimatedGIF()
         
         imageView.hidden = false
         imageView.image = image

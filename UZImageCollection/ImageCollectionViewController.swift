@@ -39,6 +39,10 @@ public class ImageCollectionViewController : UICollectionViewController, UIColle
         return 3
     }
     
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
     init(collection:ImageCollection) {
         self.collection = collection
         let layout = UICollectionViewFlowLayout()
@@ -74,7 +78,7 @@ public class ImageCollectionViewController : UICollectionViewController, UIColle
         self.view.backgroundColor = UIColor.whiteColor()
         self.collectionView?.backgroundColor = UIColor.whiteColor()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "focus:", name: "did", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didMoveCurrentImage:", name: ImageViewControllerDidChangeCurrentImage, object: nil)
         
         cellSize = floor((self.view.frame.size.width - CGFloat(numberOfItemsInLine()) + 1) / CGFloat(numberOfItemsInLine()));
         
@@ -83,9 +87,6 @@ public class ImageCollectionViewController : UICollectionViewController, UIColle
     
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        let path = self.currentFocusedPath
-        let cell = self.collectionView?.cellForItemAtIndexPath(path)
-        print(cell)
         
         if let imageView = self.animatingImageView {
             let backgroundView = UIView(frame: self.view.bounds)
@@ -134,9 +135,9 @@ public class ImageCollectionViewController : UICollectionViewController, UIColle
         }
     }
     
-    func focus(notification:NSNotification) {
+    func didMoveCurrentImage(notification:NSNotification) {
         if let userInfo = notification.userInfo {
-            if let index = userInfo["index"] as? Int {
+            if let index = userInfo[ImageViewControllerDidChangeCurrentImageIndexKey] as? Int {
                 self.currentFocusedPath = NSIndexPath(forItem: index, inSection: 0)
                 if let collectionView = self.collectionView {
                     if let cell = collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0)) {
@@ -154,11 +155,6 @@ public class ImageCollectionViewController : UICollectionViewController, UIColle
 }
 
 extension ImageCollectionViewController {
-    
-    public override func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
-        print("scrollViewDidEndScrollingAnimation")
-    }
-    
     public override  func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         if let collectionView = self.collectionView {
             for cell in collectionView.visibleCells() {
@@ -168,12 +164,11 @@ extension ImageCollectionViewController {
             }
         }
     }
-    
-    public override func scrollViewDidScroll(scrollView: UIScrollView) {
-    }
+}
 
-    public override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 1
+extension ImageCollectionViewController {
+    public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        return CGSize(width: cellSize, height: cellSize + 1)
     }
     
     public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
@@ -182,6 +177,12 @@ extension ImageCollectionViewController {
     
     public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
         return 0
+    }
+}
+
+extension ImageCollectionViewController {
+    public override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
     }
     
     public override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -247,10 +248,6 @@ extension ImageCollectionViewController {
         }
         
         return cell
-    }
-    
-    public func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSize(width: cellSize, height: cellSize + 1)
     }
     
 }
