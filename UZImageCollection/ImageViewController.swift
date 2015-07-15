@@ -22,6 +22,18 @@ class ImageViewController: UIViewController, ImageDownloader {
     var minimumZoomScale:CGFloat = 0
     var imageURL = NSURL()
     var task:NSURLSessionDataTask? = nil
+    var isDarkIntrinsic = true
+    
+    var isDark:Bool {
+        get {
+            return isDarkIntrinsic
+        }
+        
+        set {
+            isDarkIntrinsic = newValue
+            toggleDarkMode(newValue)
+        }
+    }
     
     /// for animated GIF
     var animatedImageView:FLAnimatedImageView? = nil
@@ -39,6 +51,7 @@ class ImageViewController: UIViewController, ImageDownloader {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSubviews()
+        toggleDarkMode(isDark)
     }
     
     override func willMoveToParentViewController(parent: UIViewController?) {
@@ -53,7 +66,14 @@ class ImageViewController: UIViewController, ImageDownloader {
         NSNotificationCenter.defaultCenter().postNotificationName(ImageViewControllerDidChangeCurrentImage, object: nil, userInfo: [ImageViewControllerDidChangeCurrentImageIndexKey:self.index])
     }
     
-    init(index:Int, imageCollectionViewController:ImageCollectionViewController) {
+    func toggleDarkMode(isDark:Bool) {
+        UIView.animateWithDuration(0.2, animations: { () -> Void in
+            self.scrollView.backgroundColor = isDark ? UIColor.blackColor() : UIColor.whiteColor()
+            }, completion: { (success) -> Void in
+        })
+    }
+    
+    init(index:Int, imageCollectionViewController:ImageCollectionViewController, isDark:Bool) {
         self.index = index
         self.imageCollectionViewController = imageCollectionViewController
         scrollView.addSubview(imageView)
@@ -61,11 +81,12 @@ class ImageViewController: UIViewController, ImageDownloader {
         if imageCollectionViewController.collection.URLList.indices ~= index {
             self.imageURL = imageCollectionViewController.collection.URLList[index]
         }
+        self.isDark = isDark
         reload(false)
     }
     
-    class func controllerWithIndex(index:Int, imageCollectionViewController:ImageCollectionViewController) -> ImageViewController {
-        let con = ImageViewController(index:index, imageCollectionViewController:imageCollectionViewController)
+    class func controllerWithIndex(index:Int, imageCollectionViewController:ImageCollectionViewController, isDark:Bool) -> ImageViewController {
+        let con = ImageViewController(index:index, imageCollectionViewController:imageCollectionViewController, isDark:isDark)
         return con
     }
 }

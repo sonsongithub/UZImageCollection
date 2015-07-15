@@ -8,13 +8,15 @@
 
 import UIKit
 
-class ImageViewPageController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+class ImageViewPageController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, UIGestureRecognizerDelegate {
     let collection:ImageCollection
     var currentIndex = 0
     let navigationBar = UINavigationBar(frame: CGRectZero)
     let imageCollectionViewController:ImageCollectionViewController
     var imageViewController:ImageViewController? = nil
     let item:UINavigationItem = UINavigationItem(title:"")
+    
+    var isDark = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +27,27 @@ class ImageViewPageController: UIPageViewController, UIPageViewControllerDataSou
         self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[navigationBar(==64)]", options: NSLayoutFormatOptions(), metrics: [:], views: ["navigationBar":navigationBar]))
         navigationBar.pushNavigationItem(item, animated: false)
         navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "close:")
+        
+        let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapped:")
+        tapGesture.delegate = self
+        self.view.addGestureRecognizer(tapGesture)
+    }
+    
+    func tapped(sender: UITapGestureRecognizer) {
+        isDark = !isDark
+        
+        UIView.animateWithDuration(0.2, animations: { () -> Void in
+            self.navigationBar.alpha = self.isDark ? 0 : 1
+            self.view.backgroundColor = self.isDark ? UIColor.blackColor() : UIColor.whiteColor()
+            }, completion: { (success) -> Void in
+        })
+        
+        navigationBar.hidden = isDark
+        for viewController in self.childViewControllers {
+            if let imageViewController = viewController as? ImageViewController {
+                imageViewController.toggleDarkMode(isDark)
+            }
+        }
     }
     
     func close(sender:AnyObject) {
@@ -68,7 +91,7 @@ class ImageViewPageController: UIPageViewController, UIPageViewControllerDataSou
     
     class func controller(collection:ImageCollection, index:Int, imageCollectionViewController:ImageCollectionViewController) -> ImageViewPageController {
         let vc = ImageViewPageController(collection:collection, index:index, imageCollectionViewController:imageCollectionViewController)
-        let con = ImageViewController(index: index, imageCollectionViewController:imageCollectionViewController)
+        let con = ImageViewController(index: index, imageCollectionViewController:imageCollectionViewController, isDark:false)
         vc.imageViewController = con
         vc.view.backgroundColor = UIColor.whiteColor()
         vc.setViewControllers([con], direction: .Forward, animated: false, completion: { (result) -> Void in })
@@ -97,7 +120,7 @@ class ImageViewPageController: UIPageViewController, UIPageViewControllerDataSou
             if collection.count <= index {
                 return nil
             }
-            return ImageViewController(index: index, imageCollectionViewController:imageCollectionViewController)
+            return ImageViewController(index: index, imageCollectionViewController:imageCollectionViewController, isDark:isDark)
         }
         return nil
     }
@@ -108,7 +131,7 @@ class ImageViewPageController: UIPageViewController, UIPageViewControllerDataSou
             if index < 0 {
                 return nil
             }
-            return ImageViewController(index: index, imageCollectionViewController:imageCollectionViewController)
+            return ImageViewController(index: index, imageCollectionViewController:imageCollectionViewController, isDark:isDark)
         }
         return nil
     }
