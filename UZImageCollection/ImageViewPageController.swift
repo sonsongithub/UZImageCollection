@@ -28,12 +28,17 @@ class ImageViewPageController: UIPageViewController, UIPageViewControllerDataSou
     
     func close(sender:AnyObject) {
         if let imageViewController = self.imageViewController {
-            if let p = self.presentingViewController, image = imageViewController.imageView.image {
-                let startFrame = p.view.convertRect(imageViewController.imageView.frame, fromView: imageViewController.imageView.superview)
-                let imageView = UIImageView(image: image)
-                imageView.contentMode = UIViewContentMode.ScaleAspectFill
-                imageView.frame = startFrame
-                self.imageCollectionViewController.animatingImageView = imageView
+            if let animatedImageView = imageViewController.animatedImageView {
+                self.imageCollectionViewController.animatingImageView = animatedImageView
+            }
+            else {
+                if let p = self.presentingViewController, image = imageViewController.imageView.image {
+                    let startFrame = p.view.convertRect(imageViewController.imageView.frame, fromView: imageViewController.imageView.superview)
+                    let imageView = UIImageView(image: image)
+                    imageView.contentMode = UIViewContentMode.ScaleAspectFill
+                    imageView.frame = startFrame
+                    self.imageCollectionViewController.animatingImageView = imageView
+                }
             }
         }
         self.dismissViewControllerAnimated(false, completion: { () -> Void in })

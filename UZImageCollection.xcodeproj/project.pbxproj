@@ -7,10 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		140B474A1B47704B00E38502 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14FF4CBD1B2392F2007AED39 /* Images.xcassets */; };
 		143AF5041B444E8900265644 /* CommonCrypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 143AF4E61B444E3A00265644 /* CommonCrypto.framework */; };
+		146451181B55FB260068B7F4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 146451161B55F97E0068B7F4 /* Images.xcassets */; };
 		147B16631B4660DE000844A3 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147B16621B4660DE000844A3 /* ImageDownloader.swift */; };
-		147B16641B4669BF000844A3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14FF4CBD1B2392F2007AED39 /* Images.xcassets */; };
 		148D88F51B55C97A001AD451 /* FLAnimatedImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 148D88F11B55C97A001AD451 /* FLAnimatedImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		148D88F61B55C97A001AD451 /* FLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 148D88F21B55C97A001AD451 /* FLAnimatedImage.m */; };
 		148D88F71B55C97A001AD451 /* FLAnimatedImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 148D88F31B55C97A001AD451 /* FLAnimatedImageView.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -80,6 +79,7 @@
 		1455FFD41B55173B00B33706 /* iphoneos.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; name = iphoneos.modulemap; path = UZImageCollection/vendor/CommonCrypto/iphoneos.modulemap; sourceTree = SOURCE_ROOT; };
 		1455FFD51B55173B00B33706 /* iphonesimulator.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; name = iphonesimulator.modulemap; path = UZImageCollection/vendor/CommonCrypto/iphonesimulator.modulemap; sourceTree = SOURCE_ROOT; };
 		1455FFD61B55173B00B33706 /* macosx.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; name = macosx.modulemap; path = UZImageCollection/vendor/CommonCrypto/macosx.modulemap; sourceTree = SOURCE_ROOT; };
+		146451161B55F97E0068B7F4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		147B16621B4660DE000844A3 /* ImageDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
 		148D88F11B55C97A001AD451 /* FLAnimatedImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLAnimatedImage.h; path = vendor/FLAnimatedImage/FLAnimatedImageDemo/FLAnimatedImage/FLAnimatedImage.h; sourceTree = "<group>"; };
 		148D88F21B55C97A001AD451 /* FLAnimatedImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FLAnimatedImage.m; path = vendor/FLAnimatedImage/FLAnimatedImageDemo/FLAnimatedImage/FLAnimatedImage.m; sourceTree = "<group>"; };
@@ -199,6 +199,7 @@
 		14FF4C941B239166007AED39 /* UZImageCollection */ = {
 			isa = PBXGroup;
 			children = (
+				146451161B55F97E0068B7F4 /* Images.xcassets */,
 				1455FFD91B55182500B33706 /* vendor */,
 				14FF4C971B239166007AED39 /* UZImageCollection.h */,
 				14FF4CD41B239ADC007AED39 /* ImageCollection.swift */,
@@ -416,7 +417,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				147B16641B4669BF000844A3 /* Images.xcassets in Resources */,
+				146451181B55FB260068B7F4 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,7 +433,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				14FF4CBC1B2392F2007AED39 /* Main.storyboard in Resources */,
-				140B474A1B47704B00E38502 /* Images.xcassets in Resources */,
 				14C626411B44D8FD00F319CF /* img.json in Resources */,
 				14FF4CC11B2392F2007AED39 /* LaunchScreen.xib in Resources */,
 			);

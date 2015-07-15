@@ -19,6 +19,7 @@ class ImageViewController: UIViewController, ImageDownloader {
     var minimumZoomScale:CGFloat = 0
     var imageURL = NSURL()
     var task:NSURLSessionDataTask? = nil
+    var animatedImageView:FLAnimatedImageView? = nil
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
@@ -99,19 +100,20 @@ extension ImageViewController {
         
         let path = self.cachePath()
         let data = NSData(contentsOfFile: path)
-        let animatedImage:FLAnimatedImage? = FLAnimatedImage(animatedGIFData: data)
-        
-        let animatedView = FLAnimatedImageView(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: self.view.frame.size))
-        animatedView.contentMode = .ScaleAspectFit
-        animatedView.animatedImage = animatedImage
-        
-        self.view.addSubview(animatedView)
+        if let animatedImage:FLAnimatedImage? = FLAnimatedImage(animatedGIFData: data) {
+            let animatedImageView = FLAnimatedImageView(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: self.view.frame.size))
+            animatedImageView.contentMode = .ScaleAspectFit
+            animatedImageView.animatedImage = animatedImage
+            self.view.addSubview(animatedImageView)
+            self.animatedImageView = animatedImageView
+            scrollView.userInteractionEnabled = false
+        }
         
         imageView.hidden = false
-        self.imageView.image = image
-        self.imageView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: image.size)
-        self.setupScrollViewScale(image.size)
-        self.updateImageCenter()
+        imageView.image = image
+        imageView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: image.size)
+        setupScrollViewScale(image.size)
+        updateImageCenter()
     }
     
     func updateImageCenter() {
