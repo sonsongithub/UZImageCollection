@@ -49,7 +49,10 @@ protocol ImageDownloader : class {
 extension ImageDownloader {
     
     var errorImage:UIImage {
-        return UIImage(named: "errorImage")!
+        if let bundle = NSBundle(identifier: "com.sonson.UZImageCollection"), let image = UIImage(named: "errorImage.pdf", inBundle: bundle, compatibleWithTraitCollection: nil) {
+            return image
+        }
+        return UIImage()
     }
     
     var imageURLHash:String {

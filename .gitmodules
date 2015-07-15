@@ -1,0 +1,3 @@
+[submodule "UZImageCollection/vendor/FLAnimatedImage"]
+	path = UZImageCollection/vendor/FLAnimatedImage
+	url = https://github.com/sonsongithub/FLAnimatedImage.git
