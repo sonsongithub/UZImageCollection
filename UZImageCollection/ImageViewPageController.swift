@@ -35,7 +35,6 @@ class ImageViewPageController: UIPageViewController, UIPageViewControllerDataSou
     
     func tapped(sender: UITapGestureRecognizer) {
         isDark = !isDark
-        
         UIView.animateWithDuration(0.2, animations: { () -> Void in
             self.navigationBar.alpha = self.isDark ? 0 : 1
             self.view.backgroundColor = self.isDark ? UIColor.blackColor() : UIColor.whiteColor()
@@ -45,7 +44,7 @@ class ImageViewPageController: UIPageViewController, UIPageViewControllerDataSou
         navigationBar.hidden = isDark
         for viewController in self.childViewControllers {
             if let imageViewController = viewController as? ImageViewController {
-                imageViewController.toggleDarkMode(isDark)
+                imageViewController.isDark = isDark
             }
         }
     }
@@ -57,7 +56,16 @@ class ImageViewPageController: UIPageViewController, UIPageViewControllerDataSou
             }
             else {
                 if let p = self.presentingViewController, image = imageViewController.imageView.image {
-                    let startFrame = p.view.convertRect(imageViewController.imageView.frame, fromView: imageViewController.imageView.superview)
+                    print(imageViewController.imageView.frame)
+                    print(imageViewController.scrollView.contentOffset)
+                    print(p.view.frame)
+                    print(imageViewController.scrollView.frame)
+                    let x = imageViewController.imageView.frame.origin.x - imageViewController.scrollView.contentOffset.x
+                    let y = imageViewController.imageView.frame.origin.y - imageViewController.scrollView.contentOffset.y
+                    
+                    // work around for iOS8
+                    let startFrame = CGRect(x: x, y: y, width: imageViewController.imageView.frame.size.width, height: imageViewController.imageView.frame.size.height)
+//                    let startFrame = p.view.convertRect(imageViewController.imageView.frame, fromView: imageViewController.imageView.superview)
                     let imageView = UIImageView(image: image)
                     imageView.contentMode = UIViewContentMode.ScaleAspectFill
                     imageView.frame = startFrame

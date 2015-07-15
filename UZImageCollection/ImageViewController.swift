@@ -16,7 +16,7 @@ class ImageViewController: UIViewController, ImageDownloader {
     let scrollView = UIScrollView(frame: CGRectZero)
     let imageView = UIImageView(frame: CGRectZero)
     let imageCollectionViewController:ImageCollectionViewController
-    let indicator = UIActivityIndicatorView(activityIndicatorStyle:.Gray)
+    var indicator = UIActivityIndicatorView(activityIndicatorStyle:.Gray)
     
     var maximumZoomScale:CGFloat = 0
     var minimumZoomScale:CGFloat = 0
@@ -31,6 +31,13 @@ class ImageViewController: UIViewController, ImageDownloader {
         
         set {
             isDarkIntrinsic = newValue
+            indicator.removeFromSuperview()
+            let animating = indicator.isAnimating()
+            indicator = isDarkIntrinsic ? UIActivityIndicatorView(activityIndicatorStyle:.White) : UIActivityIndicatorView(activityIndicatorStyle:.Gray)
+            if animating {
+                indicator.startAnimating()
+            }
+            setIndicator()
             toggleDarkMode(newValue)
         }
     }
@@ -166,7 +173,14 @@ extension ImageViewController {
         imageView.frame = frameToCenter
     }
     
-    func setupSubviews() {
+    func setIndicator() {
+        self.view.addSubview(indicator)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addConstraint(NSLayoutConstraint(item: indicator, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0))
+        self.view.addConstraint(NSLayoutConstraint(item: indicator, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0))
+    }
+    
+    func setScrollView() {
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.bouncesZoom = true
@@ -174,20 +188,19 @@ extension ImageViewController {
         scrollView.delegate = self
         scrollView.multipleTouchEnabled = true
         scrollView.backgroundColor = UIColor.whiteColor()
-        self.view.multipleTouchEnabled = true
-        self.navigationController?.view.multipleTouchEnabled = true
         
         self.view.addSubview(scrollView)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         
         self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[scrollView]-0-|", options: NSLayoutFormatOptions(), metrics: [:], views: ["scrollView":scrollView]))
         self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[scrollView]-1-|", options: NSLayoutFormatOptions(), metrics: [:], views: ["scrollView":scrollView]))
-        
-        self.view.addSubview(indicator)
-        indicator.translatesAutoresizingMaskIntoConstraints = false
-        
-        self.view.addConstraint(NSLayoutConstraint(item: indicator, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0))
-        self.view.addConstraint(NSLayoutConstraint(item: indicator, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0))
+    }
+    
+    func setupSubviews() {
+        self.view.multipleTouchEnabled = true
+        self.navigationController?.view.multipleTouchEnabled = true
+        setScrollView()
+        setIndicator()
     }
 }
 
