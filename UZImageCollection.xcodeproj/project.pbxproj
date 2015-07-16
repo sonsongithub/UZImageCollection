@@ -743,7 +743,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sonson.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "205d4d71-5ba3-4e8a-9aad-9566ae53f194";
+				PROVISIONING_PROFILE = "60bafe52-9272-42f3-a83a-c6e48e7bae06";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Debug;
@@ -760,7 +760,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sonson.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "205d4d71-5ba3-4e8a-9aad-9566ae53f194";
+				PROVISIONING_PROFILE = "60bafe52-9272-42f3-a83a-c6e48e7bae06";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Release;

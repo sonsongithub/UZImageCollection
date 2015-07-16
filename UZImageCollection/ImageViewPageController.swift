@@ -56,19 +56,18 @@ class ImageViewPageController: UIPageViewController, UIPageViewControllerDataSou
             }
             else {
                 if let p = self.presentingViewController, image = imageViewController.imageView.image {
-                    print(imageViewController.imageView.frame)
-                    print(imageViewController.scrollView.contentOffset)
-                    print(p.view.frame)
-                    print(imageViewController.scrollView.frame)
-                    let x = imageViewController.imageView.frame.origin.x - imageViewController.scrollView.contentOffset.x
-                    let y = imageViewController.imageView.frame.origin.y - imageViewController.scrollView.contentOffset.y
-                    
-                    // work around for iOS8
-                    let startFrame = CGRect(x: x, y: y, width: imageViewController.imageView.frame.size.width, height: imageViewController.imageView.frame.size.height)
-//                    let startFrame = p.view.convertRect(imageViewController.imageView.frame, fromView: imageViewController.imageView.superview)
                     let imageView = UIImageView(image: image)
                     imageView.contentMode = UIViewContentMode.ScaleAspectFill
-                    imageView.frame = startFrame
+                    if #available(iOS 9, *) {
+                        let startFrame = p.view.convertRect(imageViewController.imageView.frame, fromView: imageViewController.imageView.superview)
+                        imageView.frame = startFrame
+                    } else {
+                        // work around for iOS8
+                        let x = imageViewController.imageView.frame.origin.x - imageViewController.scrollView.contentOffset.x
+                        let y = imageViewController.imageView.frame.origin.y - imageViewController.scrollView.contentOffset.y
+                        let startFrame = CGRect(x: x, y: y, width: imageViewController.imageView.frame.size.width, height: imageViewController.imageView.frame.size.height)
+                        imageView.frame = startFrame
+                    }
                     self.imageCollectionViewController.animatingImageView = imageView
                 }
             }
