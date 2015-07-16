@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FLAnimatedImage.h"
 
 //! Project version number for UZImageCollection.
 FOUNDATION_EXPORT double UZImageCollectionVersionNumber;
@@ -15,5 +16,3 @@ FOUNDATION_EXPORT double UZImageCollectionVersionNumber;
 FOUNDATION_EXPORT const unsigned char UZImageCollectionVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <UZImageCollection/PublicHeader.h>
-
-

@@ -24,17 +24,38 @@ class ViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        var paths:[String] = []
-        
-        for var i = 1; i <= 11; i++ {
-            paths.append("pict - \(i).png")
-        }
-        for var i = 1; i <= 11; i++ {
-            paths.append("pict - \(i).png")
-        }
-        
-        let vc = ImageCollectionViewController.controller(paths)
-        self.presentViewController(vc, animated: true, completion: { () -> Void in })
+        guard let path = NSBundle.mainBundle().pathForResource("img.json", ofType: ""), let data = NSData(contentsOfFile: path) else {return}
+        do {
+            let json = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions())
+            if let list = json as? [String] {
+                
+                let URLList = list.flatMap({(string)->NSURL? in
+                    if let url = NSURL(string:string) { return url }
+                    return nil
+                })
+                for folder in ["cache", "thumbnail"] {
+                    let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+                    let cacheRootPath:String = paths[0]
+                    let cachePath = cacheRootPath.stringByAppendingPathComponent(folder)
+                    if let files = NSFileManager.defaultManager().subpathsAtPath(cachePath) {
+                        for file in files {
+                            let path = cachePath.stringByAppendingPathComponent(file)
+                            do {
+                                try NSFileManager.defaultManager().removeItemAtPath(path)
+                            } catch let error {
+                                print(error)
+                            }
+                        }
+                    }
+                }
+                
+                let vc = ImageCollectionViewController.controllerInNavigationController(URLList)
+                self.presentViewController(vc, animated: true, completion: { () -> Void in })
+
+            }
+        } catch _ {
+            
+        }  
     }
 }
 
