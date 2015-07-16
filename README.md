@@ -7,6 +7,9 @@ Image collection view controller to display images that are specified by URL lik
 2. Easy to use.
 3. Written in Swift.
 
+#### CAUTION
+This project is created using Xcode7 and in Swift2.0.
+
 #### How to use
 
 ```
