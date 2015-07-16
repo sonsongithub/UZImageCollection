@@ -8,26 +8,14 @@
 
 import Foundation
 
-public class ImageCollection {
-    var files:[String] = []
+class ImageCollection {
+    let URLList:[NSURL]
     
-    public init(files:[String]) {
-        self.files.extend(files)
+    init(newList:[NSURL]) {
+        URLList = newList
     }
     
     var count:Int {
-        return files.count
-    }
-    
-    public func image(index:Int) -> UIImage? {
-        if (index >= 0 && index < files.count) {
-            let file = files[index]
-//            let image = UIImage(contentsOfFile: file)
-            let image = UIImage(named: file)
-            if let image = image {
-                return image
-            }
-        }
-        return nil
+        return URLList.count
     }
 }
