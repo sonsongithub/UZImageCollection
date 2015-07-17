@@ -8,7 +8,7 @@
 
 import Foundation
 
-func imageViewFrame(sourceImageViewFrame:CGRect, destinationImageViewFrame:CGRect, imageSize:CGSize, contentMode:UIViewContentMode) -> CGRect {
+func imageViewFrame(destinationImageViewFrame:CGRect, imageSize:CGSize, contentMode:UIViewContentMode) -> CGRect {
     
     var scaleToFitImageOverContainerView:CGFloat = 1.0		/**< アニメーションさせるビューを画面全体に引き伸ばすための比．アニメーションさせるビューの最終フレームサイズを決めるために使う． */
     
@@ -209,7 +209,7 @@ extension ImageCollectionViewController {
                 self.view.addSubview(imageView)
                 let sourceRect = self.view.convertRect(cell.imageView.frame, fromView: cell.imageView.superview)
                 
-                let e = imageViewFrame(sourceRect, destinationImageViewFrame: self.view.bounds, imageSize: sourceImage.size, contentMode: UIViewContentMode.ScaleAspectFill)
+                let e = imageViewFrame(self.view.bounds, imageSize: sourceImage.size, contentMode: UIViewContentMode.ScaleAspectFill)
                 
                 imageView.frame = sourceRect
                 
