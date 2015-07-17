@@ -134,7 +134,7 @@ extension ImageViewController {
         let data = NSData(contentsOfFile: path)
         if let animatedImage:FLAnimatedImage? = FLAnimatedImage(animatedGIFData: data) {
             let animatedImageView = FLAnimatedImageView(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: self.view.frame.size))
-            animatedImageView.contentMode = .ScaleAspectFit
+            animatedImageView.contentMode = .ScaleAspectFill
             animatedImageView.animatedImage = animatedImage
             self.view.addSubview(animatedImageView)
             self.animatedImageView = animatedImageView
