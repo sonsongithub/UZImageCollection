@@ -129,27 +129,34 @@ extension ImageViewController {
         scrollView.zoomScale = scrollView.minimumZoomScale;
     }
     
-    func tryToLoadAnimatedGIF() {
-        let path = self.cachePath()
-        let data = NSData(contentsOfFile: path)
-        if let animatedImage:FLAnimatedImage? = FLAnimatedImage(animatedGIFData: data) {
-            let animatedImageView = FLAnimatedImageView(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: self.view.frame.size))
-            animatedImageView.contentMode = .ScaleAspectFit
-            animatedImageView.animatedImage = animatedImage
-            self.view.addSubview(animatedImageView)
-            self.animatedImageView = animatedImageView
-            scrollView.userInteractionEnabled = false
-        }
+    func loadAnimatedGIF() -> Bool {
+        let data = NSData(contentsOfFile:cachePath())
+        
+        guard let animatedImage:FLAnimatedImage = FLAnimatedImage(animatedGIFData: data) else { return false }
+            
+        var frame = imageViewFrame(self.view.bounds, imageSize: animatedImage.size, contentMode: UIViewContentMode.ScaleAspectFill)
+        frame.origin.x = (self.view.bounds.size.width - frame.size.width) / 2
+        frame.origin.y = (self.view.bounds.size.height - frame.size.height) / 2
+        
+        let animatedImageView = FLAnimatedImageView(frame: frame)
+        
+        animatedImageView.contentMode = .ScaleAspectFill
+        animatedImageView.animatedImage = animatedImage
+        self.view.addSubview(animatedImageView)
+        self.animatedImageView = animatedImageView
+        scrollView.userInteractionEnabled = false
+        scrollView.hidden = true
+        return true
     }
     
     func updateImageView(image:UIImage, thumbnail:UIImage?) {
-        tryToLoadAnimatedGIF()
-        
-        imageView.hidden = false
-        imageView.image = image
-        imageView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: image.size)
-        setupScrollViewScale(image.size)
-        updateImageCenter()
+        if !loadAnimatedGIF() {
+            imageView.hidden = false
+            imageView.image = image
+            imageView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: image.size)
+            setupScrollViewScale(image.size)
+            updateImageCenter()
+        }
     }
     
     func updateImageCenter() {
