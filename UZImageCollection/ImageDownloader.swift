@@ -78,26 +78,26 @@ extension ImageDownloader {
     
     func cachePath() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true)
-        let cacheRootPath:String = paths[0]
+        let cacheRootPath:NSString = paths[0]
         let cachePath = cacheRootPath.stringByAppendingPathComponent("cache")
         do {
             try NSFileManager.defaultManager().createDirectoryAtPath(cachePath, withIntermediateDirectories: true, attributes: [:])
         } catch let error {
             print(error)
         }
-        return cachePath.stringByAppendingPathComponent(imageURLHash)
+        return (cachePath as NSString).stringByAppendingPathComponent(imageURLHash) as String
     }
     
     func thumbnailPath() -> String {
         let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true)
-        let cacheRootPath:String = paths[0]
+        let cacheRootPath:NSString = paths[0]
         let cachePath = cacheRootPath.stringByAppendingPathComponent("thumbnail")
         do {
             try NSFileManager.defaultManager().createDirectoryAtPath(cachePath, withIntermediateDirectories: true, attributes: [:])
         } catch let error {
             print(error)
         }
-        return cachePath.stringByAppendingPathComponent(imageURLHash)
+        return (cachePath as NSString).stringByAppendingPathComponent(imageURLHash) as String
     }
     
     func startDownloadingImage() {
@@ -149,12 +149,10 @@ extension ImageDownloader {
             })
             self.task = nil
         })
-        if let task = task {
-            self.imageView.hidden = true
-            indicator.startAnimating()
-            self.task = task
-            task.resume()
-        }
+        self.imageView.hidden = true
+        indicator.startAnimating()
+        self.task = task
+        task.resume()
     }
     
     func reload(decelerating:Bool) {

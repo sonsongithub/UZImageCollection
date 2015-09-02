@@ -35,9 +35,9 @@ class ViewController: UIViewController {
                 })
                 for folder in ["cache", "thumbnail"] {
                     let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true)
-                    let cacheRootPath:String = paths[0]
-                    let cachePath = cacheRootPath.stringByAppendingPathComponent(folder)
-                    if let files = NSFileManager.defaultManager().subpathsAtPath(cachePath) {
+                    let cacheRootPath:NSString = paths[0]
+                    let cachePath:NSString = cacheRootPath.stringByAppendingPathComponent(folder)
+                    if let files = NSFileManager.defaultManager().subpathsAtPath(cachePath as String) {
                         for file in files {
                             let path = cachePath.stringByAppendingPathComponent(file)
                             do {
