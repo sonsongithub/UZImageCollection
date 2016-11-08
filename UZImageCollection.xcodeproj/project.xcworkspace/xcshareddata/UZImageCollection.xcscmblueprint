@@ -9,11 +9,11 @@
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "F4B5F4B2-065B-4E5E-A5E6-DBDD91C3630F",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "FB747C3A2FBE4C858B11B5ECB35F9CFC91F1DB28" : "UZImageCollection",
+    "FB747C3A2FBE4C858B11B5ECB35F9CFC91F1DB28" : "UZImageCollection\/",
     "CADC4D1B031AED4FEFB66A1DCF54AE5FF592E1F0" : "UZImageCollection\/UZImageCollection\/vendor\/FLAnimatedImage\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "UZImageCollection",
-  "DVTSourceControlWorkspaceBlueprintVersion" : 203,
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
   "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "UZImageCollection.xcodeproj",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
     {

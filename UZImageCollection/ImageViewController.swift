@@ -14,7 +14,7 @@ let ImageViewControllerDidChangeCurrentImageIndexKey = "ImageViewControllerDidCh
 class ImageViewController: UIViewController, ImageDownloader {
     let index:Int
     let scrollView = UIScrollView(frame: CGRectZero)
-    let imageView = UIImageView(frame: CGRectZero)
+    let imageView = FLAnimatedImageView(frame: CGRectZero)
     let imageCollectionViewController:ImageCollectionViewController
     var indicator = UIActivityIndicatorView(activityIndicatorStyle:.Gray)
     
@@ -59,6 +59,7 @@ class ImageViewController: UIViewController, ImageDownloader {
         super.viewDidLoad()
         setupSubviews()
         toggleDarkMode(isDark)
+        scrollView.alwaysBounceVertical = true
     }
     
     override func willMoveToParentViewController(parent: UIViewController?) {
@@ -133,19 +134,27 @@ extension ImageViewController {
         let data = NSData(contentsOfFile:cachePath())
         
         guard let animatedImage:FLAnimatedImage = FLAnimatedImage(animatedGIFData: data) else { return false }
-            
-        var frame = imageViewFrame(self.view.bounds, imageSize: animatedImage.size, contentMode: UIViewContentMode.ScaleAspectFill)
-        frame.origin.x = (self.view.bounds.size.width - frame.size.width) / 2
-        frame.origin.y = (self.view.bounds.size.height - frame.size.height) / 2
+//            
+//        var frame = imageViewFrame(self.view.bounds, imageSize: animatedImage.size, contentMode: UIViewContentMode.ScaleAspectFill)
+//        frame.origin.x = (self.view.bounds.size.width - frame.size.width) / 2
+//        frame.origin.y = (self.view.bounds.size.height - frame.size.height) / 2
+//        
+//        let animatedImageView = FLAnimatedImageView(frame: frame)
+//        
+//        animatedImageView.contentMode = .ScaleAspectFill
+//        animatedImageView.animatedImage = animatedImage
+//        animatedImage
+//        self.view.addSubview(animatedImageView)
+//        self.animatedImageView = animatedImageView
+//        scrollView.userInteractionEnabled = false
+//        scrollView.hidden = true
+//        return true
+//        
         
-        let animatedImageView = FLAnimatedImageView(frame: frame)
-        
-        animatedImageView.contentMode = .ScaleAspectFill
-        animatedImageView.animatedImage = animatedImage
-        self.view.addSubview(animatedImageView)
-        self.animatedImageView = animatedImageView
-        scrollView.userInteractionEnabled = false
-        scrollView.hidden = true
+        imageView.animatedImage = animatedImage
+        imageView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: animatedImage.size)
+        setupScrollViewScale(animatedImage.size)
+        updateImageCenter()
         return true
     }
     
@@ -214,6 +223,14 @@ extension ImageViewController {
 extension ImageViewController : UIScrollViewDelegate {
     func scrollViewDidZoom(scrollView: UIScrollView) {
         self.updateImageCenter()
+    }
+    
+    func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
+        print("scrollViewWillBeginDecelerating")
+        print(scrollView.contentOffset.y)
+        if scrollView.contentOffset.y < -150 {
+            NSNotificationCenter.defaultCenter().postNotificationName("Close", object: nil, userInfo: [:])
+        }
     }
     
     func scrollViewDidEndZooming(scrollView: UIScrollView, withView view: UIView?, atScale scale: CGFloat) {

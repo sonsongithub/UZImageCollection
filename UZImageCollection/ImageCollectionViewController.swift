@@ -78,7 +78,7 @@ public class ImageCollectionViewController : UICollectionViewController, UIColle
         self.view.backgroundColor = UIColor.whiteColor()
         self.collectionView?.backgroundColor = UIColor.whiteColor()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didMoveCurrentImage:", name: ImageViewControllerDidChangeCurrentImage, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ImageCollectionViewController.didMoveCurrentImage(_:)), name: ImageViewControllerDidChangeCurrentImage, object: nil)
         
         cellSize = floor((self.view.frame.size.width - CGFloat(numberOfItemsInLine()) + 1) / CGFloat(numberOfItemsInLine()));
         

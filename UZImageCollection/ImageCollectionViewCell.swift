@@ -9,7 +9,7 @@
 import UIKit
 
 class ImageCollectionViewCell: UICollectionViewCell, ImageDownloader {
-    let imageView = UIImageView(frame: CGRectZero)
+    let imageView = FLAnimatedImageView(frame: CGRectZero)
     let indicator = UIActivityIndicatorView(activityIndicatorStyle:.Gray)
     var imageURL = NSURL()
     var task:NSURLSessionDataTask? = nil

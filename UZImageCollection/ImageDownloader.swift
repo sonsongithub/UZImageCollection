@@ -30,7 +30,7 @@ extension String {
 }
 
 protocol ImageDownloader : class {
-    var imageView:UIImageView {get}
+    var imageView:FLAnimatedImageView {get}
     var indicator:UIActivityIndicatorView {get}
     
     var imageURLHash:String {get}
@@ -56,7 +56,7 @@ extension ImageDownloader {
     }
     
     var imageURLHash:String {
-        return self.imageURL.absoluteString.md5
+        return self.imageURL.absoluteString!.md5
     }
     
     func createThumbnail(image:UIImage) -> UIImage {
@@ -66,7 +66,7 @@ extension ImageDownloader {
         image.drawInRect(CGRectMake(0, 0, size.width, size.height))
         let resizeImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        return resizeImage
+        return resizeImage!
     }
     
     func loadImageFromCache() -> UIImage? {

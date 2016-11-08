@@ -26,11 +26,13 @@ class ImageViewPageController: UIPageViewController, UIPageViewControllerDataSou
         self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[navigationBar]-0-|", options: NSLayoutFormatOptions(), metrics: [:], views: ["navigationBar":navigationBar]))
         self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[navigationBar(==64)]", options: NSLayoutFormatOptions(), metrics: [:], views: ["navigationBar":navigationBar]))
         navigationBar.pushNavigationItem(item, animated: false)
-        navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "close:")
+        navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(ImageViewPageController.close(_:)))
         
-        let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapped:")
+        let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ImageViewPageController.tapped(_:)))
         tapGesture.delegate = self
         self.view.addGestureRecognizer(tapGesture)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ImageViewPageController.close(_:)), name: "Close", object: nil)
     }
     
     func tapped(sender: UITapGestureRecognizer) {
@@ -84,7 +86,7 @@ class ImageViewPageController: UIPageViewController, UIPageViewControllerDataSou
         self.currentIndex = index
         self.imageCollectionViewController = imageCollectionViewController
         super.init(transitionStyle: UIPageViewControllerTransitionStyle.Scroll, navigationOrientation: UIPageViewControllerNavigationOrientation.Horizontal, options:[UIPageViewControllerOptionInterPageSpacingKey:12])
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didMoveCurrentImage:", name: ImageViewControllerDidChangeCurrentImage, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ImageViewPageController.didMoveCurrentImage(_:)), name: ImageViewControllerDidChangeCurrentImage, object: nil)
         self.dataSource = self
         self.delegate = self
     }
@@ -93,7 +95,7 @@ class ImageViewPageController: UIPageViewController, UIPageViewControllerDataSou
         self.collection = ImageCollection(newList:[])
         self.imageCollectionViewController = ImageCollectionViewController(collection: ImageCollection(newList: []))
         super.init(coder: aDecoder)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didMoveCurrentImage:", name: ImageViewControllerDidChangeCurrentImage, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ImageViewPageController.didMoveCurrentImage(_:)), name: ImageViewControllerDidChangeCurrentImage, object: nil)
     }
     
     class func controller(collection:ImageCollection, index:Int, imageCollectionViewController:ImageCollectionViewController) -> ImageViewPageController {
